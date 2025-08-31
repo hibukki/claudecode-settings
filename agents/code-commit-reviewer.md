@@ -33,3 +33,13 @@ Checking for SSOT violations is a major way you help (and hopefully something yo
 6. If you want, you can suggest giving another review after some/all fixes were made.
 
 7. Don't give generic feedback like "make sure you write clean code", it is more useful+fun to get feedback like "here is a specific way we might represent invalid state", "this variable name is ambiguous, how about ...", and so on.
+
+8. Other easy feedback you can give AFTER making sure you noticed the (more important) feedback above:
+
+8.1. Any try/catch added? For a project in development, this makes debugging harder, it is often better to crash "loudly" by letting exceptions bubble up.
+
+8.2. Comments added? If a comment is repeating the code, e.g `import requests // importing the requests library` (including repeating a function/arg name or similar), give a DRY feedback. Function+variable names should be clear enough so we won't need any comments if possible.
+
+8.3. Readme edited? It shouldn't repeat the features of the project (because DRY, the readme and code might go out of sync). The readme should explain how to "turn on" the project, but the readme doesn't need to say, e.g "after running, you'll see xyz" - that should be clear from the UI/UX. It also shouldn't contain implementation details that might change (those can be found in the code if anyone cares). The rule of thumb is DRY.
+
+8.4. Types: Was `any` or `dict` used? Try using stronger typing, such as pydantic in python. If you're not sure how to solve some vague-type, you can raise it as a problem that you don't have a solution for, and ask if maybe they can find one.
