@@ -19,7 +19,17 @@ gemini -p "@package.json List the available `npm run` commands and what each of 
 For example:
 
 1. npm install --> (nothing to test) --> commit
-2. Add feature (e.g one react component) --> make sure it works (maybe by adding an automatic test, better than manually testing if possible) --> Check if there's a sub agent specialized to reviewing this (e.g, was an API/schema created/changed?) [if so: call reviewer --> if there are good useful comments then fix them --> repeat the reviewer loop] --> commit (before adding another feature)
+2. Add feature (e.g one react component) --> Check if there's a sub agent specialized to reviewing this (e.g, was an API/schema created/changed?) [if so: call reviewer --> if there are good useful comments then fix them --> repeat the reviewer loop] --> make sure it works (maybe by adding an automatic test, better than manually testing if possible) --> commit (before adding another feature)
+
+## Commit messages
+
+DRY in commit messages too. You can check the git log to see the style of the project.
+
+## The review agent
+
+You can use the review agent whenever you want.
+Don't give it generic feedback on how to review code, it knows how to do that.
+You can give it context about the context of implementing the change, which includes the quote for what the user asked for (e.g "Add argparse to support calling multiple times") and perhaps more context to understand that change if any.
 
 # Python (uv)
 
