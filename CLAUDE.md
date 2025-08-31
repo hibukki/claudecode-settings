@@ -25,6 +25,13 @@ For example:
 
 DRY in commit messages too. You can check the git log to see the style of the project.
 
+## Example good commit messages
+
+- `+argparse, +-n/--num-calls`
+- `is_malicious -> maliciousness_score`
+- `simplify error handling: -try/catch, -error stats`
+- `+base64 encoding for PHP payload`
+
 ## The review agent
 
 You can use the review agent whenever you want.
