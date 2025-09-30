@@ -90,3 +90,14 @@ I prefer having visible errors to make debug easy:
 
 Logs - sure.
 UI - sometimes. Often it's useful to have a small part at the bottom of the UI that displays the last error(s).
+
+# Searching code / ast-grep / refactors / renames
+
+`ast-grep` is available for searching code patterns.
+
+Example usage:
+`ast-grep --pattern '$PROP && $PROP()' --lang ts TypeScript/src`
+
+If renaming/refactoring:
+Do one rename at a time --> verify nothing broke (lint? whatever works for this project) --> commit with only that one rename, e.g `git commit -m "name_before -> name_after"`.
+Even if 2 renames are related, each gets its own commit.
