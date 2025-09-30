@@ -117,6 +117,6 @@ if usage:
         color = '\033[32m'  # green
     reset = '\033[0m'
 
-    output += f" | {color}{pct:.1f}%{reset} ({used:,}/{CONTEXT_WINDOW:,})"
+    output += f" | {color}{pct:.1f}%{reset}"
 
 print(output)
