@@ -1,9 +1,5 @@
 #!/bin/bash
 
-
-# Read JSON input from stdin
-input=$(cat)
-
 # Example structure:
 # {
 #   "hook_event_name": "Status",
@@ -31,10 +27,10 @@ input=$(cat)
 #   }
 # }
 
-# Extract values using jq
-MODEL_DISPLAY=$(echo "$input" | jq -r '.model.display_name')
-CURRENT_DIR=$(echo "$input" | jq -r '.workspace.current_dir')
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-echo "[$MODEL_DISPLAY] 📁 ${CURRENT_DIR##*/}"
+# Pass stdin to Python script
+cat | python3 "$SCRIPT_DIR/statusline.py"
 
 
