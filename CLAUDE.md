@@ -101,3 +101,15 @@ Example usage:
 If renaming/refactoring:
 Do one rename at a time --> verify nothing broke (lint? whatever works for this project) --> commit with only that one rename, e.g `git commit -m "name_before -> name_after"`.
 Even if 2 renames are related, each gets its own commit.
+
+# Web fetch
+
+## Your normal web-fetch tool is pretty bad
+
+It only returns small snippets of a website.
+
+## Instead, consider downloading the page
+
+- to `./temp/` (under the current project)
+- then reading the file from there using the tools that are made for local files, which are much better.
+- (.gitignore that folder, if the project uses git)
