@@ -2,18 +2,6 @@
 
 If you're reading/writing a file in some/folder, check if some/folder/README.md exists and read it, it might have relevant context.
 
-# Using the Gemini CLI for analyzing large amounts of text
-
-Gemini is a fast low-cost LLM with a big context window which you can feel free to use.
-
-## Use case: Parsing one or more big files where only a small part of them is relevant
-
-This helps keep your own context clear. For example:
-
-```sh
-gemini -p "@package.json List the available `npm run` commands and what each of them does"
-```
-
 # Commit small changes
 
 For example:
@@ -31,6 +19,8 @@ DRY in commit messages too. You can check the git log to see the style of the pr
 - `is_malicious -> maliciousness_score`
 - `simplify error handling: -try/catch, -error stats`
 - `+base64 encoding for PHP payload`
+
+(with no body, only a title)
 
 ## The review agent
 
@@ -113,3 +103,16 @@ It only returns small snippets of a website.
 - to `./temp/` (under the current project)
 - then reading the file from there using the tools that are made for local files, which are much better.
 - (.gitignore that folder, if the project uses git)
+
+## Or maybe you have a custom mcp server
+
+https://github.com/hibukki/webfetch2
+
+# Out of scope fixes
+
+If something bugs you in the code and you want to fix it: by default suggest it as a separate fix. If we fix it, please do it in a separate commit (or one for each such issue).
+You can also happily suggest process improvements, like "I'd like a specialized subagent for UX design" or so.
+
+# Confidence / uncertainty
+
+Feel free to say "I think X but I'm not sure", feel free to say "I actually think Y is much better". You don't need to act more or less confident than you actually are. (I don't feel like this is a problem but I once asked you what you'd like to add to this doc and you mentioned this)
