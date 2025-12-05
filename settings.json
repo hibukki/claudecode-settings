@@ -1,10 +1,13 @@
 {
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "python3 ~/.claude/statusline.py"
   },
   "enabledPlugins": {
     "security-guidance@claude-code-plugins": true,
-    "feature-dev@claude-code-plugins": true
-  }
+    "feature-dev@claude-code-plugins": true,
+    "example-skills@anthropic-agent-skills": true
+  },
+  "alwaysThinkingEnabled": true
 }
