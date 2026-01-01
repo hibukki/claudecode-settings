@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import json
+from datetime import datetime
 
 # Read JSON input
 input_data = json.load(sys.stdin)
@@ -79,7 +80,6 @@ def get_context_usage():
         timestamp = entry.get('timestamp', '')
 
         try:
-            from datetime import datetime
             ts = datetime.fromisoformat(timestamp.replace('Z', '+00:00')).timestamp()
         except:
             ts = float('-inf')
