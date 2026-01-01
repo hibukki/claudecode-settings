@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 import json
-from datetime import datetime
 
 # Read JSON input
 input_data = json.load(sys.stdin)
@@ -64,11 +63,6 @@ def get_context_usage():
         return None
 
     lines = read_transcript(transcript_path)
-    if not lines:
-        return None
-
-    latest_usage = None
-    latest_ts = float('-inf')
 
     for line in reversed(lines):
         try:
@@ -79,21 +73,9 @@ def get_context_usage():
         if not is_valid_entry(entry):
             continue
 
-        usage = entry.get('message', {}).get('usage', {})
-        timestamp = entry.get('timestamp', '')
+        return entry.get('message', {}).get('usage', {})
 
-        try:
-            ts = datetime.fromisoformat(timestamp.replace('Z', '+00:00')).timestamp()
-        except ValueError:
-            ts = float('-inf')
-
-        if ts > latest_ts:
-            latest_ts = ts
-            latest_usage = usage
-        elif ts == latest_ts and used_total(usage) > used_total(latest_usage):
-            latest_usage = usage
-
-    return latest_usage
+    return None
 
 # Get context usage
 usage = get_context_usage()
