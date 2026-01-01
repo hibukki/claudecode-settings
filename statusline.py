@@ -23,10 +23,11 @@ def read_transcript(path):
         return []
 
 def used_total(usage):
-    """Calculate context tokens used (all input, excluding output)."""
+    """Calculate context tokens used (input + output = full context after response)."""
     if not usage:
         return 0
     return (usage.get('input_tokens', 0) +
+            usage.get('output_tokens', 0) +
             usage.get('cache_read_input_tokens', 0) +
             usage.get('cache_creation_input_tokens', 0))
 
