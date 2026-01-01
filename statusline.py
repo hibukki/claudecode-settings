@@ -19,7 +19,7 @@ def read_transcript(path):
     try:
         with open(path, 'r') as f:
             return [line.strip() for line in f if line.strip()]
-    except:
+    except OSError:
         return []
 
 def used_total(usage):
@@ -70,7 +70,7 @@ def get_context_usage():
     for line in reversed(lines):
         try:
             entry = json.loads(line)
-        except:
+        except json.JSONDecodeError:
             continue
 
         if not is_valid_entry(entry):
@@ -81,7 +81,7 @@ def get_context_usage():
 
         try:
             ts = datetime.fromisoformat(timestamp.replace('Z', '+00:00')).timestamp()
-        except:
+        except ValueError:
             ts = float('-inf')
 
         if ts > latest_ts:
