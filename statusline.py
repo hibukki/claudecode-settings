@@ -22,13 +22,10 @@ def read_transcript(path):
         return []
 
 def used_total(usage):
-    """Calculate total tokens used."""
+    """Calculate context tokens used (input only, cache tokens are subsets)."""
     if not usage:
         return 0
-    return (usage.get('input_tokens', 0) +
-            usage.get('output_tokens', 0) +
-            usage.get('cache_read_input_tokens', 0) +
-            usage.get('cache_creation_input_tokens', 0))
+    return usage.get('input_tokens', 0)
 
 def is_valid_entry(entry):
     """Check if entry is a valid main context entry."""
