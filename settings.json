@@ -1,4 +1,27 @@
 {
+  "env": {
+    "PNPM_HOME": "/Users/yonatancale/Library/pnpm"
+  },
+  "permissions": {
+    "allow": [
+      "Skill(plugin-dev:create-plugin)",
+      "Bash(mkdir:*)",
+      "Skill(plugin-dev:agent-development)",
+      "Skill(plugin-dev:hook-development)",
+      "Bash(bash:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(mv:*)",
+      "Bash(chmod:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:docs.*)",
+      "WebSearch",
+      "Bash(xargs cat:*)"
+    ],
+    "defaultMode": "default"
+  },
   "model": "opus",
   "statusLine": {
     "type": "command",
