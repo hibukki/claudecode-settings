@@ -5,9 +5,15 @@
     "command": "python3 ~/.claude/statusline.py"
   },
   "enabledPlugins": {
-    "security-guidance@claude-code-plugins": true,
-    "feature-dev@claude-code-plugins": true,
-    "example-skills@anthropic-agent-skills": true
+    "security-guidance@claude-code-plugins": false,
+    "feature-dev@claude-code-plugins": false,
+    "example-skills@anthropic-agent-skills": true,
+    "frontend-design@claude-code-plugins": false,
+    "hookify@claude-plugins-official": true,
+    "project-setup@alignment-hive": true,
+    "canvas@claude-canvas": true,
+    "claude-hud@claude-hud": true,
+    "quick-review@yonatans-cc-marketplace": true
   },
   "alwaysThinkingEnabled": true
 }
