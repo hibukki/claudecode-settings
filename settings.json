@@ -18,7 +18,8 @@
       "Bash(cat:*)",
       "WebFetch(domain:docs.*)",
       "WebSearch",
-      "Bash(xargs cat:*)"
+      "Bash(xargs cat:*)",
+      "mcp__plugin_context7_context7"
     ],
     "defaultMode": "default"
   },
@@ -34,9 +35,11 @@
     "frontend-design@claude-code-plugins": false,
     "hookify@claude-plugins-official": true,
     "project-setup@alignment-hive": true,
-    "canvas@claude-canvas": true,
+    "canvas@claude-canvas": false,
     "claude-hud@claude-hud": true,
-    "quick-review@yonatans-cc-marketplace": true
+    "quick-review@yonatans-cc-marketplace": true,
+    "dev-browser@dev-browser-marketplace": true,
+    "context7@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
 }
