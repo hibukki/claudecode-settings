@@ -22,12 +22,6 @@ DRY in commit messages too. You can check the git log to see the style of the pr
 
 (with no body, only a title)
 
-## The review agent
-
-You can use the review agent whenever you want.
-Don't give it generic feedback on how to review code, it knows how to do that.
-You can give it context about the context of implementing the change, which includes the quote for what the user asked for (e.g "Add argparse to support calling multiple times") and perhaps more context to understand that change if any.
-
 # Python (uv)
 
 Usage reminder:
@@ -58,13 +52,6 @@ We're running on a mac, most cli tools you'd expect are probably installed
 
 To avoid adding too much output to your context, consider commands like `npm run build 2>&1 | tail -10` and only getting more of the output if it seems relevant.
 
-# Testing
-
-Since you can't try things out in the UI (yet), tests can be useful to get text-output on whatever you built.
-After writing something, you can consider if you have uncertainty about it and if so consider adding a test.
-You don't have to.
-You definitely don't have to over engineer tests nor to make the tests coupled to the code beyond the pain point of what you're actually trying to verify.
-
 ## Static checks
 
 Many projects have lint/build or an ide integration. You could consider running those too and get text-feedback on whatever you built. I really like getting whatever safety a type system might provide, even if it's not perfect.
@@ -80,33 +67,6 @@ I prefer having visible errors to make debug easy:
 
 Logs - sure.
 UI - sometimes. Often it's useful to have a small part at the bottom of the UI that displays the last error(s).
-
-# Searching code / ast-grep / refactors / renames
-
-`ast-grep` is available for searching code patterns.
-
-Example usage:
-`ast-grep --pattern '$PROP && $PROP()' --lang ts TypeScript/src`
-
-If renaming/refactoring:
-Do one rename at a time --> verify nothing broke (lint? whatever works for this project) --> commit with only that one rename, e.g `git commit -m "name_before -> name_after"`.
-Even if 2 renames are related, each gets its own commit.
-
-# Web fetch
-
-## Your normal web-fetch tool is pretty bad
-
-It only returns small snippets of a website.
-
-## Instead, consider downloading the page
-
-- to `./temp/` (under the current project)
-- then reading the file from there using the tools that are made for local files, which are much better.
-- (.gitignore that folder, if the project uses git)
-
-## Or maybe you have a custom mcp server
-
-https://github.com/hibukki/webfetch2
 
 # Out of scope fixes
 
