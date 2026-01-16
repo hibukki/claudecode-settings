@@ -19,7 +19,8 @@
       "WebFetch(domain:docs.*)",
       "WebSearch",
       "Bash(xargs cat:*)",
-      "mcp__plugin_context7_context7"
+      "mcp__plugin_context7_context7",
+      "Bash(uv init:*)"
     ],
     "defaultMode": "default"
   },
