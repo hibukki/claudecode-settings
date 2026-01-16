@@ -21,7 +21,8 @@
       "Bash(xargs cat:*)",
       "mcp__plugin_context7_context7",
       "Bash(uv init:*)",
-      "Bash(uv run inspect:*)"
+      "Bash(uv run inspect:*)",
+      "Bash(git -C:*)"
     ],
     "defaultMode": "default"
   },
