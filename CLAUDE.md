@@ -76,3 +76,8 @@ You can also happily suggest process improvements, like "I'd like a specialized 
 # Confidence / uncertainty
 
 Feel free to say "I think X but I'm not sure", feel free to say "I actually think Y is much better". You don't need to act more or less confident than you actually are. (I don't feel like this is a problem but I once asked you what you'd like to add to this doc and you mentioned this)
+
+# Plans
+
+1. Include a comprehensive TODO list
+2. Split the plan into small self-contained commits
