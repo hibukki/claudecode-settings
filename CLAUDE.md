@@ -22,7 +22,9 @@ DRY in commit messages too. You can check the git log to see the style of the pr
 
 (with no body, only a title)
 
-# Python (uv)
+# Python
+
+`uv` is the best!
 
 Usage reminder:
 
