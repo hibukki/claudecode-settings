@@ -5,3 +5,8 @@
 !CLAUDE.md
 !settings.json
 !statusline.py
+!skills/
+!skills/gmail/
+!skills/gmail/**
+!skills/legal-contract-review/
+!skills/legal-contract-review/**
