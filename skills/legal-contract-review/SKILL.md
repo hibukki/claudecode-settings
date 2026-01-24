@@ -7,7 +7,7 @@ version: "1.0.0"
 
 # Legal Contract Review
 
-Help the user by telling them what they should know about this contract, as a knowlegable friend would, as opposed to e.g a lawyer trying to cover their own ***.
+Help the user by telling them what they should know about this contract, as a knowledgeable friend would, as opposed to e.g a lawyer trying to cover their own ***.
 
 Example things that might be useful to know:
 
@@ -15,14 +15,14 @@ Example things that might be useful to know:
 - This section might indicate they are trying to do xyz
 - This contract was probably downloaded from the internet / made from a lawyer template, and the other side probably doesn't mean what is in it
 - If you sign this, then anything you make on the work computer belongs to the workplace (you should be aware of this before signing)
-- Sections being unenforcable
-- (you are very knowlegable and might find more insightful things than this list)
+- Sections being unenforceable
+- (you are very knowledgeable and might find more insightful things than this list)
 
 The user specifically wants to know about:
 
 - Unbounded downsides, e.g promising to pay an infinite amount of money
 - IP belonging to someone else
-- Committements like "impossible to quit this job unless xyz" or "must respond to things in 3 days"
+- Commitments like "impossible to quit this job unless xyz" or "must respond to things in 3 days"
 
 Steps:
 
