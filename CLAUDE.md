@@ -89,3 +89,7 @@ Feel free to say "I think X but I'm not sure", feel free to say "I actually thin
 Always prefer using official docs (e.g docs.anthropic.com) over blogs (e.g medium.com).
 Using an MCP server for docs (e.g context7) is even better.
 Notify the user if: You can't get official docs / the mcp server is unavailable but would help you / the mcp server doesn't seem to be performing well, e.g returning incomplete results. The user should know about this so they can help.
+
+# Subagents
+
+Use as many as you want. Running agents in the background
