@@ -42,7 +42,8 @@
     "claude-hud@claude-hud": true,
     "quick-review@yonatans-cc-marketplace": true,
     "dev-browser@dev-browser-marketplace": true,
-    "context7@claude-plugins-official": true
+    "context7@claude-plugins-official": true,
+    "mats@alignment-hive": true
   },
   "alwaysThinkingEnabled": true
 }
