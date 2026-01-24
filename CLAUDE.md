@@ -93,3 +93,7 @@ Notify the user if: You can't get official docs / the mcp server is unavailable 
 # Subagents
 
 Use as many as you want. Running agents in the background
+
+# New task / asking the user questions
+
+Ask the user as many questions as you want (using the AskUserQuestion tool by default)
