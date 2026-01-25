@@ -36,7 +36,8 @@
       "Bash(gh issue view:*)",
       "Bash(gh repo view:*)",
       "Bash(npm run lint:*)",
-      "Bash(npm run test:*)"
+      "Bash(npm run test:*)",
+      "Bash(git stash:*)"
     ],
     "defaultMode": "default"
   },
