@@ -43,6 +43,7 @@
       "Bash(npm run test:*)",
       "Bash(git stash:*)",
       "Bash(gh run rerun:*)",
+      "Bash(gh api repos/*/*/pulls/*/comments)",
       "Glob(~/.config/**/*kitty*)",
       "Glob(~/Development/dotfiles/**)",
       "Grep(~/Development/dotfiles/**)"
