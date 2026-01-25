@@ -1,6 +1,8 @@
 {
+  "cleanupPeriodDays": 36500,
   "env": {
-    "PNPM_HOME": "/Users/yonatancale/Library/pnpm"
+    "PNPM_HOME": "/Users/yonatancale/Library/pnpm",
+    "CLAUDE_CODE_ENABLE_TASKS": "1"
   },
   "permissions": {
     "allow": [
@@ -29,7 +31,7 @@
   "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "bash -c '\"/Users/yonatancale/.bun/bin/bun\" \"$(ls -td ~/.claude/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | head -1)src/index.ts\"'"
+    "command": "/Users/yonatancale/.claude/statusline-minimal.py"
   },
   "enabledPlugins": {
     "security-guidance@claude-code-plugins": false,

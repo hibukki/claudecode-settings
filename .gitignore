@@ -5,6 +5,7 @@
 !CLAUDE.md
 !settings.json
 !statusline.py
+!statusline-minimal.py
 !skills/
 !skills/gmail/
 !skills/gmail/**
