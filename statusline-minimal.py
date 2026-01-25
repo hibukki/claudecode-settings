@@ -11,6 +11,7 @@ current_dir = input_data.get('workspace', {}).get('current_dir', '')
 transcript_path = input_data.get('transcript_path', '')
 
 CONTEXT_WINDOW = 200_000
+COMPACT_THRESHOLD = 0.775
 
 def read_transcript(path):
     try:
@@ -73,16 +74,16 @@ branch = get_git_branch()
 # Build output
 parts = []
 
-# Context percentage with color
 if usage:
     pct = used_total(usage) / CONTEXT_WINDOW * 100
-    if pct >= 90:
+    left = COMPACT_THRESHOLD * 100 - pct
+    if left <= 5:
         color = '\033[31m'  # red
-    elif pct >= 70:
+    elif left <= 15:
         color = '\033[33m'  # yellow
     else:
         color = '\033[32m'  # green
-    parts.append(f"{color}{pct:.0f}%\033[0m")
+    parts.append(f"{color}{left:.0f}% to compact\033[0m")
 
 # Folder name
 if dir_name:
