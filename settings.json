@@ -6,6 +6,8 @@
   },
   "permissions": {
     "allow": [
+      "Read(/Users/yonatancale/.claude/*)",
+      "Read(/Users/yonatancale/Development/dotfiles/*)",
       "Read(/Users/yonatancale/.config/kitty/*)",
       "Skill(plugin-dev:create-plugin)",
       "Bash(mkdir:*)",
