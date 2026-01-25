@@ -9,6 +9,7 @@
       "Read(/Users/yonatancale/.claude/*)",
       "Read(/Users/yonatancale/Development/dotfiles/*)",
       "Read(/Users/yonatancale/.config/kitty/*)",
+      "Read(/Users/yonatancale/.hammerspoon/init.lua)",
       "Skill(plugin-dev:create-plugin)",
       "Bash(mkdir:*)",
       "Skill(plugin-dev:agent-development)",
