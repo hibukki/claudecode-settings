@@ -40,7 +40,8 @@
       "Bash(gh repo view:*)",
       "Bash(npm run lint:*)",
       "Bash(npm run test:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(gh run rerun:*)"
     ],
     "defaultMode": "default"
   },
@@ -61,7 +62,8 @@
     "quick-review@yonatans-cc-marketplace": true,
     "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
-    "mats@alignment-hive": true
+    "mats@alignment-hive": true,
+    "code-simplifier@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
 }
