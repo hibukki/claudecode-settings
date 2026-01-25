@@ -44,7 +44,8 @@
       "Bash(git stash:*)",
       "Bash(gh run rerun:*)",
       "Glob(~/.config/**/*kitty*)",
-      "Glob(~/Development/dotfiles/**)"
+      "Glob(~/Development/dotfiles/**)",
+      "Grep(~/Development/dotfiles/**)"
     ],
     "defaultMode": "default"
   },
