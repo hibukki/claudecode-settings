@@ -41,7 +41,8 @@
       "Bash(npm run lint:*)",
       "Bash(npm run test:*)",
       "Bash(git stash:*)",
-      "Bash(gh run rerun:*)"
+      "Bash(gh run rerun:*)",
+      "Glob(~/.config/**/*kitty*)"
     ],
     "defaultMode": "default"
   },
