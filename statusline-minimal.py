@@ -76,15 +76,15 @@ branch = get_git_branch()
 parts = []
 
 if usage:
-    pct = used_total(usage) / CONTEXT_WINDOW_TOKENS * 100
-    left = max(0, COMPACT_THRESHOLD_FRACTION * 100 - pct)
-    if left <= 5:
+    used_pct = used_total(usage) / CONTEXT_WINDOW_TOKENS * 100
+    left_until_compact_pct = max(0, COMPACT_THRESHOLD_FRACTION * 100 - used_pct)
+    if left_until_compact_pct <= 5:
         color = '\033[31m'  # red
-    elif left <= 15:
+    elif left_until_compact_pct <= 15:
         color = '\033[33m'  # yellow
     else:
         color = '\033[32m'  # green
-    parts.append(f"{color}{left:.0f}% to compact\033[0m")
+    parts.append(f"{color}{left_until_compact_pct:.0f}% to compact\033[0m")
 
 # Folder name
 if dir_name:
