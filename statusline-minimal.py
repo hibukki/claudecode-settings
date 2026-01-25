@@ -62,7 +62,7 @@ def get_git_branch():
             capture_output=True, text=True, timeout=1
         )
         return result.stdout.strip() if result.returncode == 0 else ''
-    except:
+    except Exception:
         return ''
 
 # Get values
@@ -92,4 +92,7 @@ if dir_name:
 if branch:
     parts.append(f"({branch})")
 
-print(' | '.join(parts[:2]) + (' ' + parts[2] if len(parts) > 2 else ''))
+output = ' | '.join(parts[:2])
+if len(parts) > 2:
+    output += ' ' + parts[2]
+print(output)
