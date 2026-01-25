@@ -42,6 +42,7 @@
       "Bash(npm run lint:*)",
       "Bash(npm run test:*)",
       "Bash(git stash:*)",
+      "Bash(git checkout:*)",
       "Bash(gh run rerun:*)",
       "Bash(gh api repos/*/*/pulls/*/comments)",
       "Glob(~/.config/**/*kitty*)",
