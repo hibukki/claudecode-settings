@@ -11,7 +11,8 @@ current_dir = input_data.get('workspace', {}).get('current_dir', '')
 transcript_path = input_data.get('transcript_path', '')
 
 CONTEXT_WINDOW = 200_000
-COMPACT_THRESHOLD = 0.775
+AUTOCOMPACT_BUFFER = 0.225
+COMPACT_THRESHOLD = 1 - AUTOCOMPACT_BUFFER
 
 def read_transcript(path):
     try:
