@@ -6,6 +6,7 @@
   },
   "permissions": {
     "allow": [
+      "Read(/Users/yonatancale/.config/kitty/*)",
       "Skill(plugin-dev:create-plugin)",
       "Bash(mkdir:*)",
       "Skill(plugin-dev:agent-development)",
