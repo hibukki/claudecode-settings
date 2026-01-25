@@ -13,6 +13,7 @@ transcript_path = input_data.get('transcript_path', '')
 CONTEXT_WINDOW_TOKENS = 200_000
 AUTOCOMPACT_BUFFER_FRACTION = 0.225
 COMPACT_THRESHOLD_FRACTION = 1 - AUTOCOMPACT_BUFFER_FRACTION
+# All fractions/percentages above and below are relative to total context window
 
 def read_transcript(path):
     try:
