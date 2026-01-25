@@ -97,3 +97,7 @@ Use as many as you want. Running agents in the background
 # New task / asking the user questions
 
 Ask the user as many questions as you want (using the AskUserQuestion tool by default)
+
+# dotfiles config (kitty, zsh, git)
+
+See ~/Development/dotfiles
