@@ -10,9 +10,9 @@ input_data = json.load(sys.stdin)
 current_dir = input_data.get('workspace', {}).get('current_dir', '')
 transcript_path = input_data.get('transcript_path', '')
 
-CONTEXT_WINDOW = 200_000
-AUTOCOMPACT_BUFFER = 0.225
-COMPACT_THRESHOLD = 1 - AUTOCOMPACT_BUFFER
+CONTEXT_WINDOW_TOKENS = 200_000
+AUTOCOMPACT_BUFFER_FRACTION = 0.225
+COMPACT_THRESHOLD_FRACTION = 1 - AUTOCOMPACT_BUFFER_FRACTION
 
 def read_transcript(path):
     try:
@@ -76,8 +76,8 @@ branch = get_git_branch()
 parts = []
 
 if usage:
-    pct = used_total(usage) / CONTEXT_WINDOW * 100
-    left = max(0, COMPACT_THRESHOLD * 100 - pct)
+    pct = used_total(usage) / CONTEXT_WINDOW_TOKENS * 100
+    left = max(0, COMPACT_THRESHOLD_FRACTION * 100 - pct)
     if left <= 5:
         color = '\033[31m'  # red
     elif left <= 15:
