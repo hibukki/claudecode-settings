@@ -41,7 +41,7 @@
     "hookify@claude-plugins-official": true,
     "project-setup@alignment-hive": true,
     "canvas@claude-canvas": false,
-    "claude-hud@claude-hud": true,
+    "claude-hud@claude-hud": false,
     "quick-review@yonatans-cc-marketplace": true,
     "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
