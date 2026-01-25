@@ -76,7 +76,7 @@ parts = []
 
 if usage:
     pct = used_total(usage) / CONTEXT_WINDOW * 100
-    left = COMPACT_THRESHOLD * 100 - pct
+    left = max(0, COMPACT_THRESHOLD * 100 - pct)
     if left <= 5:
         color = '\033[31m'  # red
     elif left <= 15:
