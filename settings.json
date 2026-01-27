@@ -2,7 +2,8 @@
   "cleanupPeriodDays": 36500,
   "env": {
     "PNPM_HOME": "/Users/yonatancale/Library/pnpm",
-    "CLAUDE_CODE_ENABLE_TASKS": "1"
+    "CLAUDE_CODE_ENABLE_TASKS": "1",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1"
   },
   "permissions": {
     "allow": [
