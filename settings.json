@@ -53,6 +53,7 @@
       "Bash(git switch:*)",
       "Bash(git restore:*)",
       "Bash(git cherry-pick:*)",
+      "Bash(git mv:*)",
       "Bash(gh run rerun:*)",
       "Bash(gh api repos/*/*/pulls/*/comments)",
       "Glob(~/.config/**/*kitty*)",
@@ -69,17 +70,19 @@
   "enabledPlugins": {
     "security-guidance@claude-code-plugins": false,
     "feature-dev@claude-code-plugins": false,
-    "example-skills@anthropic-agent-skills": true,
     "frontend-design@claude-code-plugins": false,
     "hookify@claude-plugins-official": true,
     "project-setup@alignment-hive": true,
-    "canvas@claude-canvas": false,
-    "claude-hud@claude-hud": false,
     "quick-review@yonatans-cc-marketplace": true,
     "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
     "mats@alignment-hive": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "Notion@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "plugin-security-reviews@yonatans-cc-marketplace": true
   },
   "alwaysThinkingEnabled": true
 }
