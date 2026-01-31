@@ -26,10 +26,12 @@ If credentials are missing, guide user through setup. Claude can assist with bro
    - Application type: Desktop app
    - Download JSON credentials to `~/.claude/google-workspace-credentials.json`
 
-**First-time auth** (prints URL to click/paste in correct browser profile):
+**First-time auth**:
 ```bash
-oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope gmail.modify --output_format bare --disableAutoOpenConsentPage
+oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope gmail.modify --output_format bare
 ```
+
+This might fail if the auth opened in e.g the wrong chrome profile, in which case the user will need claude to run this again.
 
 ## Handling SERVICE_DISABLED errors
 
@@ -57,12 +59,16 @@ oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope 
 The user will be prompted to grant the broader permission.
 
 **Common scopes:**
-- Gmail: `gmail.readonly`, `gmail.modify`, `gmail.send`
-- Drive: `drive.readonly`, `drive`, `drive.file`
-- Sheets: `spreadsheets.readonly`, `spreadsheets`
-- Docs: `documents.readonly`, `documents`
+- `gmail.readonly`, `gmail.modify`, `gmail.send`
+- `drive.readonly`, `drive`, `drive.file`
+- `spreadsheets.readonly`, `spreadsheets`
+- `documents.readonly`, `documents`
 
 ---
+
+API usage for all services should be available via the *official* google docs (don't use e.g posts from medium) or via a docs tool like context7 if you have it.
+
+Below are some examples:
 
 # Gmail
 
@@ -72,8 +78,6 @@ The user will be prompted to grant the broader permission.
 curl -s "https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=10" \
   -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope gmail.modify --output_format bare --refresh)"
 ```
-
-Returns message IDs. Use `maxResults` parameter to control count.
 
 ## Read email
 
@@ -98,10 +102,6 @@ curl -s -X POST "https://gmail.googleapis.com/gmail/v1/users/me/messages/send" \
 ```
 
 The email must be base64url encoded (standard base64 with `+/` replaced by `-_`, padding removed).
-
-## Additional API usage
-
-For operations beyond list/read/send (labels, search with queries, drafts, batch operations), use context7 to query Gmail API documentation.
 
 ---
 
@@ -139,10 +139,6 @@ curl -s -X POST "https://www.googleapis.com/upload/drive/v3/files?uploadType=med
   --data-binary @local_file.txt
 ```
 
-## Additional API usage
-
-For operations beyond list/download/upload (folders, permissions, search), use context7 to query Drive API documentation.
-
 ---
 
 # Sheets
@@ -167,10 +163,6 @@ curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/
   -d '{"values": [["A1", "B1"], ["A2", "B2"]]}'
 ```
 
-## Additional API usage
-
-For operations beyond read/write (formatting, formulas, multiple ranges), use context7 to query Sheets API documentation.
-
 ---
 
 # Docs
@@ -183,15 +175,6 @@ curl -s "https://docs.googleapis.com/v1/documents/${DOC_ID}" \
   -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents.readonly --output_format bare --refresh)"
 ```
 
-## Create document
+## Comments
 
-```bash
-curl -s -X POST "https://docs.googleapis.com/v1/documents" \
-  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents --output_format bare --refresh)" \
-  -H "Content-Type: application/json" \
-  -d '{"title": "New Document"}'
-```
-
-## Additional API usage
-
-For operations beyond read/create (batch updates, insertions, formatting), use context7 to query Docs API documentation.
+It isn't possible to create a comment in google docs on a specific word (see more in the official docs). It should be possible to read comments, and reply to existing comments.
