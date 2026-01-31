@@ -148,3 +148,28 @@ curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/
 ## Additional API usage
 
 For operations beyond read/write (formatting, formulas, multiple ranges), use context7 to query Sheets API documentation.
+
+---
+
+# Docs
+
+## Read document
+
+```bash
+DOC_ID="<document_id>"
+curl -s "https://docs.googleapis.com/v1/documents/${DOC_ID}" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents.readonly --output_format bare --refresh)"
+```
+
+## Create document
+
+```bash
+curl -s -X POST "https://docs.googleapis.com/v1/documents" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents --output_format bare --refresh)" \
+  -H "Content-Type: application/json" \
+  -d '{"title": "New Document"}'
+```
+
+## Additional API usage
+
+For operations beyond read/create (batch updates, insertions, formatting), use context7 to query Docs API documentation.
