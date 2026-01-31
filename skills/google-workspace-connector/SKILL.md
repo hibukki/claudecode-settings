@@ -33,9 +33,10 @@ oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope 
 
 ## Handling SERVICE_DISABLED errors
 
-If an API call returns `SERVICE_DISABLED`, the API needs to be enabled in the Google Cloud project. Provide the user with the activation URL from the error response, then use AskUserQuestion to wait:
+If an API call returns `SERVICE_DISABLED`, the API needs to be enabled in the Google Cloud project. Use AskUserQuestion with the activation URL in the question title:
 
 ```
+Question: "Please enable the <API> API: <activationUrl from error>"
 Options: ["Enabled", "Need help"]
 ```
 
@@ -119,3 +120,31 @@ curl -s -X POST "https://www.googleapis.com/upload/drive/v3/files?uploadType=med
 ## Additional API usage
 
 For operations beyond list/download/upload (folders, permissions, search), use context7 to query Drive API documentation.
+
+---
+
+# Sheets
+
+## Read cells
+
+```bash
+SPREADSHEET_ID="<spreadsheet_id>"
+RANGE="Sheet1!A1:B10"
+curl -s "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope spreadsheets.readonly --output_format bare --refresh)"
+```
+
+## Write cells
+
+```bash
+SPREADSHEET_ID="<spreadsheet_id>"
+RANGE="Sheet1!A1:B2"
+curl -s -X PUT "https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}?valueInputOption=USER_ENTERED" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope spreadsheets --output_format bare --refresh)" \
+  -H "Content-Type: application/json" \
+  -d '{"values": [["A1", "B1"], ["A2", "B2"]]}'
+```
+
+## Additional API usage
+
+For operations beyond read/write (formatting, formulas, multiple ranges), use context7 to query Sheets API documentation.
