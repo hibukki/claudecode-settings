@@ -13,6 +13,7 @@
       "Read(/Users/yonatancale/.hammerspoon/init.lua)",
       "Skill(plugin-dev:create-plugin)",
       "Bash(mkdir:*)",
+      "Bash(oauth2l:*)",
       "Skill(plugin-dev:agent-development)",
       "Skill(plugin-dev:hook-development)",
       "Bash(bash:*)",
@@ -27,6 +28,8 @@
       "WebSearch",
       "Bash(xargs cat:*)",
       "mcp__plugin_context7_context7",
+      "Bash(ls:*)",
+      "Bash(ls:*echo:*)",
       "Bash(uv init:*)",
       "Bash(uv run inspect:*)",
       "Bash(git -C:*)",
@@ -71,7 +74,7 @@
     "quick-review@yonatans-cc-marketplace": true,
     "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
-    "mats@alignment-hive": true,
+    "mats@alignment-hive": false,
     "code-simplifier@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
