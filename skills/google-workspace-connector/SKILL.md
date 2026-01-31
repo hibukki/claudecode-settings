@@ -40,6 +40,28 @@ Question: "Please enable the <API> API: <activationUrl from error>"
 Options: ["Enabled", "Need help"]
 ```
 
+## Adding or upgrading scopes
+
+oauth2l caches tokens per scope. To add a new scope or upgrade permissions:
+
+**Add a new API** (e.g., Docs after using Gmail):
+```bash
+oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents.readonly --output_format bare
+```
+This triggers a new consent flow for the additional scope.
+
+**Upgrade permissions** (e.g., `documents.readonly` → `documents`):
+```bash
+oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope documents --output_format bare
+```
+The user will be prompted to grant the broader permission.
+
+**Common scopes:**
+- Gmail: `gmail.readonly`, `gmail.modify`, `gmail.send`
+- Drive: `drive.readonly`, `drive`, `drive.file`
+- Sheets: `spreadsheets.readonly`, `spreadsheets`
+- Docs: `documents.readonly`, `documents`
+
 ---
 
 # Gmail
