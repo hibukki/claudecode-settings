@@ -7,7 +7,7 @@
 !statusline.py
 !statusline-minimal.py
 !skills/
-!skills/email-gmail-connector/
-!skills/email-gmail-connector/**
+!skills/google-workspace-connector/
+!skills/google-workspace-connector/**
 !skills/legal-contract-review/
 !skills/legal-contract-review/**
