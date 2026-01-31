@@ -31,6 +31,14 @@ If credentials are missing, guide user through setup. Claude can assist with bro
 oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope gmail.modify --output_format bare --disableAutoOpenConsentPage
 ```
 
+## Handling SERVICE_DISABLED errors
+
+If an API call returns `SERVICE_DISABLED`, the API needs to be enabled in the Google Cloud project. Provide the user with the activation URL from the error response, then use AskUserQuestion to wait:
+
+```
+Options: ["Enabled", "Need help"]
+```
+
 ---
 
 # Gmail
@@ -71,3 +79,43 @@ The email must be base64url encoded (standard base64 with `+/` replaced by `-_`,
 ## Additional API usage
 
 For operations beyond list/read/send (labels, search with queries, drafts, batch operations), use context7 to query Gmail API documentation.
+
+---
+
+# Drive
+
+## List files
+
+```bash
+curl -s "https://www.googleapis.com/drive/v3/files?pageSize=10" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope drive.readonly --output_format bare --refresh)"
+```
+
+## Download file
+
+```bash
+FILE_ID="<file_id>"
+curl -s "https://www.googleapis.com/drive/v3/files/${FILE_ID}?alt=media" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope drive.readonly --output_format bare --refresh)" \
+  -o output_filename
+```
+
+For Google Docs/Sheets/Slides, export to a specific format:
+```bash
+curl -s "https://www.googleapis.com/drive/v3/files/${FILE_ID}/export?mimeType=application/pdf" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope drive.readonly --output_format bare --refresh)" \
+  -o output.pdf
+```
+
+## Upload file
+
+```bash
+curl -s -X POST "https://www.googleapis.com/upload/drive/v3/files?uploadType=media" \
+  -H "Authorization: Bearer $(oauth2l fetch --credentials ~/.claude/google-workspace-credentials.json --scope drive --output_format bare --refresh)" \
+  -H "Content-Type: application/octet-stream" \
+  --data-binary @local_file.txt
+```
+
+## Additional API usage
+
+For operations beyond list/download/upload (folders, permissions, search), use context7 to query Drive API documentation.
