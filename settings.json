@@ -3,7 +3,8 @@
   "env": {
     "PNPM_HOME": "/Users/yonatancale/Library/pnpm",
     "CLAUDE_CODE_ENABLE_TASKS": "1",
-    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1"
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1",
+    "EDITOR": "code -w"
   },
   "permissions": {
     "allow": [
@@ -75,7 +76,9 @@
     "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
     "mats@alignment-hive": false,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "google-workspace-connector@yonatans-cc-marketplace": true,
+    "document-skills@anthropic-agent-skills": true
   },
   "alwaysThinkingEnabled": true
 }
