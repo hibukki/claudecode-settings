@@ -89,6 +89,15 @@ Notify the user if: You can't get official docs / the mcp server is unavailable 
 
 Use as many as you want. Running agents in the background
 
+## Giving skills to subagents
+
+Subagents have permission to use skills but don't know which ones exist. Include skill names in your prompt:
+
+```text
+You can use the Skill tool with skill="dev-browser:dev-browser" for browser automation.
+For docs, use context7: mcp__plugin_context7_context7__query-docs with libraryId="/sawyerhood/dev-browser"
+```
+
 # New task / asking the user questions
 
 Ask the user as many questions as you want (using the AskUserQuestion tool by default)
