@@ -10,7 +10,7 @@ input_data = json.load(sys.stdin)
 current_dir = input_data.get('workspace', {}).get('current_dir', '')
 transcript_path = input_data.get('transcript_path', '')
 
-CONTEXT_WINDOW_TOKENS = 200_000
+CONTEXT_WINDOW_TOKENS = 1_000_000
 AUTOCOMPACT_BUFFER_FRACTION = 0.225
 COMPACT_THRESHOLD_FRACTION = 1 - AUTOCOMPACT_BUFFER_FRACTION
 # All fractions/percentages above and below are relative to total context window
