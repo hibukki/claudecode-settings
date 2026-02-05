@@ -91,6 +91,7 @@
       "Bash(git rev-parse *)",
       "Bash(git ls-files*)",
       "Bash(git add *)",
+      "Bash(git add * && git commit *)",
       "Bash(git commit *)",
       "Bash(git init *)",
       "Bash(git push)",
