@@ -36,7 +36,7 @@ if current_usage and context_window_size:
         color = '\033[33m'   # yellow
     else:
         color = '\033[32m'   # green
-    parts.append(f"{color}{used_pct:.0f}%\033[0m")
+    parts.append(f"{color}{used_pct:.0f}% used\033[0m")
 
 if dir_name:
     parts.append(dir_name)
