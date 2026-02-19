@@ -147,22 +147,6 @@
       "Bash(xargs -I{} cut *)",
       "Bash(xargs -I{} sed -n *)"
     ],
-    "ask": [
-      "Bash(curl* -X POST*)",
-      "Bash(curl* -X PUT*)",
-      "Bash(curl* -X DELETE*)",
-      "Bash(curl* -X PATCH*)",
-      "Bash(curl* --request POST*)",
-      "Bash(curl* --request PUT*)",
-      "Bash(curl* --request DELETE*)",
-      "Bash(curl* --request PATCH*)",
-      "Bash(curl* --data*)",
-      "Bash(curl* -d *)",
-      "Bash(curl* -F *)",
-      "Bash(curl* --form*)",
-      "Bash(curl* -T *)",
-      "Bash(curl* --upload-file*)"
-    ],
     "deny": [
       "Bash(for *)",
       "Bash(while *)",
@@ -180,9 +164,25 @@
       "Bash(xargs -I{} bash *)",
       "Bash(cat)"
     ],
+    "ask": [
+      "Bash(curl* -X POST*)",
+      "Bash(curl* -X PUT*)",
+      "Bash(curl* -X DELETE*)",
+      "Bash(curl* -X PATCH*)",
+      "Bash(curl* --request POST*)",
+      "Bash(curl* --request PUT*)",
+      "Bash(curl* --request DELETE*)",
+      "Bash(curl* --request PATCH*)",
+      "Bash(curl* --data*)",
+      "Bash(curl* -d *)",
+      "Bash(curl* -F *)",
+      "Bash(curl* --form*)",
+      "Bash(curl* -T *)",
+      "Bash(curl* --upload-file*)"
+    ],
     "defaultMode": "default"
   },
-  "model": "opus",
+  "model": "sonnet",
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
@@ -195,7 +195,11 @@
     "mats@alignment-hive": true,
     "code-simplifier@claude-plugins-official": true,
     "google-workspace-connector@yonatans-cc-marketplace": true,
-    "document-skills@anthropic-agent-skills": true
+    "document-skills@anthropic-agent-skills": true,
+    "data@knowledge-work-plugins": true,
+    "legal@knowledge-work-plugins": true
   },
-  "alwaysThinkingEnabled": true
+  "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "effortLevel": "medium"
 }
