@@ -20,6 +20,44 @@ def get_git_branch():
     except Exception:
         return ''
 
+def get_ci_status(branch):
+    if not branch:
+        return ''
+    try:
+        # Get HEAD commit sha
+        sha_result = subprocess.run(
+            ['git', 'rev-parse', 'HEAD'],
+            capture_output=True, text=True, timeout=1
+        )
+        if sha_result.returncode != 0:
+            return ''
+        sha = sha_result.stdout.strip()
+
+        # Get all runs for this commit
+        result = subprocess.run(
+            ['gh', 'run', 'list', '--commit', sha,
+             '--json', 'status,conclusion,name', '--limit', '20'],
+            capture_output=True, text=True, timeout=3
+        )
+        if result.returncode != 0:
+            return ''
+        runs = json.loads(result.stdout)
+        if not runs:
+            return ''
+
+        n_pass = sum(1 for r in runs if r.get('conclusion') == 'success')
+        n_fail = sum(1 for r in runs if r.get('status') == 'completed' and r.get('conclusion') not in ('success', ''))
+        n_running = sum(1 for r in runs if r.get('status') != 'completed')
+        total = len(runs)
+
+        if n_fail > 0:
+            return f'\033[31mCI:{n_pass}/{total}\033[0m'
+        if n_running > 0:
+            return f'\033[33mCI:{n_pass}/{total}…\033[0m'
+        return f'\033[32mCI:{n_pass}/{total}\033[0m'
+    except Exception:
+        return ''
+
 dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
 branch = get_git_branch()
 parts = []
@@ -44,7 +82,8 @@ if dir_name:
 if branch:
     parts.append(f"({branch})")
 
-output = ' | '.join(parts[:2])
-if len(parts) > 2:
-    output += ' ' + parts[2]
-print(output)
+ci = get_ci_status(branch)
+if ci:
+    parts.append(ci)
+
+print(' | '.join(parts))
