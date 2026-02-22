@@ -182,7 +182,7 @@
     ],
     "defaultMode": "default"
   },
-  "model": "sonnet",
+  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
@@ -197,9 +197,9 @@
     "google-workspace-connector@yonatans-cc-marketplace": true,
     "document-skills@anthropic-agent-skills": true,
     "data@knowledge-work-plugins": true,
-    "legal@knowledge-work-plugins": true
+    "legal@knowledge-work-plugins": true,
+    "cowork-plugin-management@knowledge-work-plugins": true
   },
   "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
-  "effortLevel": "medium"
+  "skipDangerousModePermissionPrompt": true
 }
