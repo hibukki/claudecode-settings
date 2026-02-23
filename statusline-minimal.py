@@ -33,14 +33,14 @@ def get_ci_status(branch):
         sha = sha_result.stdout.strip()
 
         result = subprocess.run(
-            ['gh', 'run', 'list', '--commit', sha,
-             '--json', 'status,conclusion,name', '--limit', '20'],
-            capture_output=True, text=True, timeout=3
+            ['gh', 'api', f'repos/:owner/:repo/commits/{sha}/check-runs?per_page=100',
+             '--jq', '.check_runs[] | [.status, (.conclusion // "")] | @tsv'],
+            capture_output=True, text=True, timeout=5
         )
         if result.returncode != 0:
             return ''
-        runs = json.loads(result.stdout)
-        if not runs:
+        lines = [l for l in result.stdout.strip().split('\n') if l]
+        if not lines:
             return ''
 
         GREEN = '\033[32m'
@@ -49,11 +49,20 @@ def get_ci_status(branch):
         YELLOW = '\033[33m'
         RST = '\033[0m'
 
-        n_pass = sum(1 for r in runs if r.get('conclusion') == 'success')
-        n_fail = sum(1 for r in runs if r.get('status') == 'completed' and r.get('conclusion') not in ('success', 'skipped', ''))
-        n_skip = sum(1 for r in runs if r.get('conclusion') == 'skipped')
-        n_running = sum(1 for r in runs if r.get('status') != 'completed')
-        total = len(runs)
+        n_pass = n_fail = n_skip = n_running = 0
+        for line in lines:
+            cols = line.split('\t')
+            status = cols[0] if cols else ''
+            conclusion = cols[1] if len(cols) > 1 else ''
+            if status != 'completed':
+                n_running += 1
+            elif conclusion == 'success':
+                n_pass += 1
+            elif conclusion in ('skipped', 'neutral'):
+                n_skip += 1
+            else:
+                n_fail += 1
+        total = len(lines)
 
         # CI:3,1,2/5  (green pass, red fail, gray skip / total)
         parts = [f'{GREEN}{n_pass}{RST}']
