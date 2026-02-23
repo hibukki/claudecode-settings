@@ -163,11 +163,17 @@
       "Bash(xargs bash *)",
       "Bash(xargs -I{} bash *)",
       "Bash(cat)",
+      "Bash(find /Users/yonatancale)",
       "Bash(find /Users/yonatancale -*)",
+      "Bash(find /Users/yonatancale/)",
       "Bash(find /Users/yonatancale/ -*)",
+      "Bash(find ~)",
       "Bash(find ~ -*)",
+      "Bash(find ~/)",
       "Bash(find ~/ -*)",
+      "Bash(find $HOME)",
       "Bash(find $HOME -*)",
+      "Bash(find $HOME/)",
       "Bash(find $HOME/ -*)"
     ],
     "ask": [
