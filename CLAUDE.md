@@ -52,8 +52,6 @@ Check if the project is using a template and specifically if it supports dark mo
 
 We're running on a mac, most cli tools you'd expect are probably installed
 
-To avoid adding too much output to your context, consider commands like `npm run build 2>&1 | tail -10` and only getting more of the output if it seems relevant.
-
 ## Static checks
 
 Many projects have lint/build or an ide integration. You could consider running those too and get text-feedback on whatever you built. I really like getting whatever safety a type system might provide, even if it's not perfect.
