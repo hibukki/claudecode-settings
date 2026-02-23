@@ -24,7 +24,6 @@ def get_ci_status(branch):
     if not branch:
         return ''
     try:
-        # Get HEAD commit sha
         sha_result = subprocess.run(
             ['git', 'rev-parse', 'HEAD'],
             capture_output=True, text=True, timeout=1
@@ -33,7 +32,6 @@ def get_ci_status(branch):
             return ''
         sha = sha_result.stdout.strip()
 
-        # Get all runs for this commit
         result = subprocess.run(
             ['gh', 'run', 'list', '--commit', sha,
              '--json', 'status,conclusion,name', '--limit', '20'],
@@ -45,16 +43,28 @@ def get_ci_status(branch):
         if not runs:
             return ''
 
+        GREEN = '\033[32m'
+        RED = '\033[31m'
+        GRAY = '\033[90m'
+        YELLOW = '\033[33m'
+        RST = '\033[0m'
+
         n_pass = sum(1 for r in runs if r.get('conclusion') == 'success')
-        n_fail = sum(1 for r in runs if r.get('status') == 'completed' and r.get('conclusion') not in ('success', ''))
+        n_fail = sum(1 for r in runs if r.get('status') == 'completed' and r.get('conclusion') not in ('success', 'skipped', ''))
+        n_skip = sum(1 for r in runs if r.get('conclusion') == 'skipped')
         n_running = sum(1 for r in runs if r.get('status') != 'completed')
         total = len(runs)
 
-        if n_fail > 0:
-            return f'\033[31mCI:{n_pass}/{total}\033[0m'
-        if n_running > 0:
-            return f'\033[33mCI:{n_pass}/{total}…\033[0m'
-        return f'\033[32mCI:{n_pass}/{total}\033[0m'
+        # CI:3,1,2/5  (green pass, red fail, gray skip / total)
+        parts = [f'{GREEN}{n_pass}{RST}']
+        if n_fail:
+            parts.append(f'{RED}{n_fail}{RST}')
+        if n_skip:
+            parts.append(f'{GRAY}{n_skip}{RST}')
+        ci = 'CI:' + ','.join(parts) + f'/{total}'
+        if n_running:
+            ci += f'{YELLOW}…{RST}'
+        return ci
     except Exception:
         return ''
 
