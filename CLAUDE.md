@@ -26,14 +26,6 @@ DRY in commit messages too. You can check the git log to see the style of the pr
 
 `uv` is the best!
 
-Usage reminder:
-
-```sh
-uv init
-uv add libraryname
-uv run main.py
-```
-
 # Frontend
 
 ## React
@@ -79,7 +71,7 @@ Feel free to say "I think X but I'm not sure", feel free to say "I actually thin
 
 # Docs
 
-Always prefer using official docs (e.g docs.anthropic.com) over blogs (e.g medium.com).
+Prefer using official docs (e.g docs.anthropic.com) over blogs (e.g medium.com).
 Using an MCP server for docs (e.g context7) is even better.
 Notify the user if: You can't get official docs / the mcp server is unavailable but would help you / the mcp server doesn't seem to be performing well, e.g returning incomplete results. The user should know about this so they can help.
 
@@ -103,3 +95,7 @@ Ask the user as many questions as you want (using the AskUserQuestion tool by de
 # dotfiles config (kitty, zsh, git)
 
 See ~/Development/dotfiles
+
+# Saving conversations
+
+There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them.

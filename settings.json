@@ -190,11 +190,11 @@
       "Bash(curl* -F *)",
       "Bash(curl* --form*)",
       "Bash(curl* -T *)",
-      "Bash(curl* --upload-file*)"
+      "Bash(curl* --upload-file*)",
+      "Bash(delegate-with-prompt:*)"
     ],
     "defaultMode": "default"
   },
-  "model": "opus[1m]",
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
@@ -210,8 +210,14 @@
     "document-skills@anthropic-agent-skills": true,
     "data@knowledge-work-plugins": true,
     "legal@knowledge-work-plugins": true,
-    "cowork-plugin-management@knowledge-work-plugins": true
+    "cowork-plugin-management@knowledge-work-plugins": true,
+    "hive@alignment-hive": true,
+    "telegram@claude-plugins-official": true,
+    "precis@precis": true
   },
   "alwaysThinkingEnabled": true,
+  "effortLevel": "medium",
+  "voiceEnabled": true,
+  "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true
 }
