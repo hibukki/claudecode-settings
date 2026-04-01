@@ -210,7 +210,6 @@
     "google-workspace-connector@yonatans-cc-marketplace": true,
     "document-skills@anthropic-agent-skills": true,
     "data@knowledge-work-plugins": true,
-    "legal@knowledge-work-plugins": true,
     "cowork-plugin-management@knowledge-work-plugins": true,
     "hive@alignment-hive": true,
     "telegram@claude-plugins-official": true,
