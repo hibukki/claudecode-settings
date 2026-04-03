@@ -137,14 +137,26 @@ rate_limits = input_data.get('rate_limits', {})
 five_h = rate_limits.get('five_hour', {})
 seven_d = rate_limits.get('seven_day', {})
 
+def time_elapsed_pct(resets_at, window_seconds):
+    if not resets_at:
+        return None
+    now = datetime.now().timestamp()
+    window_start = resets_at - window_seconds
+    elapsed = now - window_start
+    return max(0, min(100, elapsed / window_seconds * 100))
+
 if five_h.get('used_percentage') is not None:
     pct = round(five_h['used_percentage'])
     reset = format_reset_time(five_h['resets_at'], short=True) if five_h.get('resets_at') else ''
-    parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
+    t_pct = time_elapsed_pct(five_h.get('resets_at'), 5 * 3600)
+    t_str = f"/{round(t_pct)}%" if t_pct is not None else ''
+    parts.append(f"{pct}%{t_str}/{reset}" if reset else f"{pct}%{t_str}")
 
 if seven_d.get('used_percentage') is not None:
     pct = round(seven_d['used_percentage'])
     reset = format_reset_time(seven_d['resets_at'], short=False) if seven_d.get('resets_at') else ''
-    parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
+    t_pct = time_elapsed_pct(seven_d.get('resets_at'), 7 * 24 * 3600)
+    t_str = f"/{round(t_pct)}%" if t_pct is not None else ''
+    parts.append(f"{pct}%{t_str}/{reset}" if reset else f"{pct}%{t_str}")
 
 print(' | '.join(parts))
