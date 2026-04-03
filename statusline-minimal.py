@@ -2,7 +2,6 @@
 import sys
 import json
 import subprocess
-import os
 from datetime import datetime
 
 input_data = json.load(sys.stdin)
@@ -127,8 +126,6 @@ ci = get_ci_status(branch)
 if ci:
     parts.append(ci)
 
-left = ' | '.join(parts)
-
 def format_reset_time(epoch, short=False):
     dt = datetime.fromtimestamp(epoch)
     hour = dt.strftime('%-I%p').lower()
@@ -137,32 +134,17 @@ def format_reset_time(epoch, short=False):
     return dt.strftime('%a ') + hour
 
 rate_limits = input_data.get('rate_limits', {})
-right_parts = []
 five_h = rate_limits.get('five_hour', {})
 seven_d = rate_limits.get('seven_day', {})
 
 if five_h.get('used_percentage') is not None:
     pct = round(five_h['used_percentage'])
     reset = format_reset_time(five_h['resets_at'], short=True) if five_h.get('resets_at') else ''
-    right_parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
+    parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
 
 if seven_d.get('used_percentage') is not None:
     pct = round(seven_d['used_percentage'])
     reset = format_reset_time(seven_d['resets_at'], short=False) if seven_d.get('resets_at') else ''
-    right_parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
+    parts.append(f"{pct}%/{reset}" if reset else f"{pct}%")
 
-right = ' '.join(right_parts)
-
-if right:
-    import re
-    ansi_re = re.compile(r'\033\[[0-9;]*m')
-    left_visible = len(ansi_re.sub('', left))
-    right_visible = len(right)
-    try:
-        cols = os.get_terminal_size().columns
-    except OSError:
-        cols = 120
-    gap = max(1, cols - left_visible - right_visible)
-    print(left + ' ' * gap + right)
-else:
-    print(left)
+print(' | '.join(parts))
