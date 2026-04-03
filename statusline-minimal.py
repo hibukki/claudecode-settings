@@ -86,9 +86,9 @@ parts = []
 if current_usage:
     cache_read = current_usage.get('cache_read_input_tokens', 0)
     cache_create = current_usage.get('cache_creation_input_tokens', 0)
-    cache_total = cache_read + cache_create
-    if cache_total > 0:
-        hit_pct = cache_read / cache_total * 100
+    total_input = (current_usage.get('input_tokens', 0) + cache_read + cache_create)
+    if total_input > 0:
+        hit_pct = cache_read / total_input * 100
         if hit_pct >= 80:
             color = '\033[32m'
         elif hit_pct >= 50:
