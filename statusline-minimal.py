@@ -77,9 +77,29 @@ def get_ci_status(branch):
     except Exception:
         return ''
 
+cost_data = input_data.get('cost', {})
+
 dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
 branch = get_git_branch()
 parts = []
+
+if current_usage:
+    cache_read = current_usage.get('cache_read_input_tokens', 0)
+    cache_create = current_usage.get('cache_creation_input_tokens', 0)
+    cache_total = cache_read + cache_create
+    if cache_total > 0:
+        hit_pct = cache_read / cache_total * 100
+        if hit_pct >= 80:
+            color = '\033[32m'
+        elif hit_pct >= 50:
+            color = '\033[33m'
+        else:
+            color = '\033[31m'
+        parts.append(f"cache: {color}{hit_pct:.0f}%\033[0m")
+
+total_cost = cost_data.get('total_cost_usd')
+if total_cost is not None:
+    parts.append(f"${total_cost:.2f}")
 
 if current_usage and context_window_size:
     used = (current_usage.get('input_tokens', 0) +
