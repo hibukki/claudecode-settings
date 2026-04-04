@@ -145,18 +145,36 @@ def time_elapsed_pct(resets_at, window_seconds):
     elapsed = now - window_start
     return max(0, min(100, elapsed / window_seconds * 100))
 
+def burn_rate(used_pct, time_pct):
+    if time_pct is None or time_pct < 1:
+        return None
+    return used_pct / time_pct
+
+def format_rate(rate):
+    if rate is None:
+        return ''
+    if rate >= 2:
+        color = '\033[31m'
+    elif rate >= 1.2:
+        color = '\033[33m'
+    else:
+        color = '\033[32m'
+    return f"/{color}{rate:.1f}x\033[0m"
+
 if five_h.get('used_percentage') is not None:
     pct = round(five_h['used_percentage'])
     reset = format_reset_time(five_h['resets_at'], short=True) if five_h.get('resets_at') else ''
     t_pct = time_elapsed_pct(five_h.get('resets_at'), 5 * 3600)
-    t_str = f"/{round(t_pct)}%" if t_pct is not None else ''
-    parts.append(f"{pct}%{t_str}/{reset}" if reset else f"{pct}%{t_str}")
+    rate = burn_rate(five_h['used_percentage'], t_pct)
+    r_str = format_rate(rate)
+    parts.append(f"{pct}%{r_str}/{reset}" if reset else f"{pct}%{r_str}")
 
 if seven_d.get('used_percentage') is not None:
     pct = round(seven_d['used_percentage'])
     reset = format_reset_time(seven_d['resets_at'], short=False) if seven_d.get('resets_at') else ''
     t_pct = time_elapsed_pct(seven_d.get('resets_at'), 7 * 24 * 3600)
-    t_str = f"/{round(t_pct)}%" if t_pct is not None else ''
-    parts.append(f"{pct}%{t_str}/{reset}" if reset else f"{pct}%{t_str}")
+    rate = burn_rate(seven_d['used_percentage'], t_pct)
+    r_str = format_rate(rate)
+    parts.append(f"{pct}%{r_str}/{reset}" if reset else f"{pct}%{r_str}")
 
 print(' | '.join(parts))
