@@ -96,6 +96,10 @@ Ask the user as many questions as you want (using the AskUserQuestion tool by de
 
 See ~/Development/dotfiles
 
+# Plan: Explore agents vs Precis
+
+If the `precis` plugin is available then please use it INSTEAD of explore agents, including (if you need details about specific files and not searching/exploring the code), just reading those files directly.
+
 # Saving conversations
 
 There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them.
