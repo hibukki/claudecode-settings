@@ -146,7 +146,7 @@ def time_elapsed_pct(resets_at, window_seconds):
     return max(0, min(100, elapsed / window_seconds * 100))
 
 def burn_rate(used_pct, time_pct):
-    if time_pct is None or time_pct < 1:
+    if time_pct is None or time_pct < 0.05:
         return None
     return used_pct / time_pct
 
