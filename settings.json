@@ -214,7 +214,16 @@
     "cowork-plugin-management@knowledge-work-plugins": true,
     "hive@alignment-hive": true,
     "telegram@claude-plugins-official": true,
-    "precis@precis": true
+    "precis@precis": true,
+    "codex@codex-plugin-cc": true
+  },
+  "extraKnownMarketplaces": {
+    "codex-plugin-cc": {
+      "source": {
+        "source": "github",
+        "repo": "Crazytieguy/codex-plugin-cc"
+      }
+    }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
