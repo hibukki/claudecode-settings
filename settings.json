@@ -148,7 +148,21 @@
       "Bash(xargs -I{} dirname *)",
       "Bash(xargs -I{} grep *)",
       "Bash(xargs -I{} cut *)",
-      "Bash(xargs -I{} sed -n *)"
+      "Bash(xargs -I{} sed -n *)",
+      "Bash(codex-companion)",
+      "Bash(codex-companion help)",
+      "Bash(codex-companion help *)",
+      "Bash(codex-companion review)",
+      "Bash(codex-companion review *)",
+      "Bash(codex-companion adversarial-review)",
+      "Bash(codex-companion adversarial-review *)",
+      "Bash(codex-companion plan-review *)",
+      "Bash(codex-companion status)",
+      "Bash(codex-companion status *)",
+      "Bash(codex-companion result)",
+      "Bash(codex-companion result *)",
+      "Bash(codex-companion cancel)",
+      "Bash(codex-companion cancel *)"
     ],
     "deny": [
       "Agent(Explore)",
@@ -202,6 +216,31 @@
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Write(*/.claude/plans/*.md)",
+            "command": "node /Users/yonatancale/.claude/scripts/plan-write-reminder.mjs",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/yonatancale/.claude/scripts/simplify-reminder.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
   },
   "enabledPlugins": {
     "hookify@claude-plugins-official": true,
