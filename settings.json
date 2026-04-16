@@ -213,10 +213,6 @@
     ],
     "defaultMode": "default"
   },
-  "statusLine": {
-    "type": "command",
-    "command": "/Users/yonatancale/.claude/statusline-minimal.py"
-  },
   "hooks": {
     "PreToolUse": [
       {
@@ -224,8 +220,8 @@
         "hooks": [
           {
             "type": "command",
-            "if": "Write(*/.claude/plans/*.md)",
             "command": "node /Users/yonatancale/.claude/scripts/plan-write-reminder.mjs",
+            "if": "Write(*/.claude/plans/*.md)",
             "timeout": 5
           }
         ]
@@ -241,6 +237,10 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/yonatancale/.claude/statusline-minimal.py"
   },
   "enabledPlugins": {
     "hookify@claude-plugins-official": true,
@@ -263,12 +263,21 @@
       "source": {
         "source": "github",
         "repo": "Crazytieguy/codex-plugin-cc"
+      },
+      "autoUpdate": true
+    },
+    "anthropic-agent-skills": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/skills"
       }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
-  "voiceEnabled": true,
+  "awaySummaryEnabled": false,
   "showThinkingSummaries": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
