@@ -98,7 +98,7 @@ See ~/Development/dotfiles
 
 # Plan: Explore agents vs Precis
 
-If the `precis` plugin is available then please use it INSTEAD of explore agents, including (if you need details about specific files and not searching/exploring the code), just reading those files directly.
+Plan mode asks you to use explore agents, but if the `precis` plugin is available then please use it INSTEAD of explore agents, including (if you need details about specific files and not searching/exploring the code), just reading those files directly. I'm interested in feedback on how well this works for you
 
 # Saving conversations
 
