@@ -11,3 +11,6 @@
 !skills/google-workspace-connector/**
 !skills/legal-contract-review/
 !skills/legal-contract-review/**
+!scripts/
+!scripts/usage-log-user-prompt-submit.py
+!scripts/usage-log-stop.py

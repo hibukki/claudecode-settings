@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 import sys
+import os
 import json
 import subprocess
 import time
-from datetime import datetime
+from datetime import datetime, timezone
+from pathlib import Path
 
 _t_start = time.perf_counter()
 _SELF_TIMING_THRESHOLD_MS = 1000
+USAGE_STATE_DIR = Path.home() / ".claude" / "usage-state"
 
 input_data = json.load(sys.stdin)
 
@@ -83,6 +86,72 @@ def get_ci_status(branch):
         return ''
 
 cost_data = input_data.get('cost', {})
+session_id = input_data.get('session_id')
+
+
+def iter_lines_reverse(path, chunk_size=4096):
+    with open(path, 'rb') as f:
+        f.seek(0, os.SEEK_END)
+        pos = f.tell()
+        buffer = b''
+        while pos > 0:
+            read_size = min(chunk_size, pos)
+            pos -= read_size
+            f.seek(pos)
+            chunk = f.read(read_size) + buffer
+            lines = chunk.split(b'\n')
+            buffer = lines[0]
+            for line in reversed(lines[1:]):
+                if line:
+                    yield line.decode('utf-8', errors='replace')
+        if buffer:
+            yield buffer.decode('utf-8', errors='replace')
+
+
+def read_session_state(events_path):
+    """Return (latest_cost_obs, latest_baseline) scanning in reverse."""
+    latest_obs = None
+    latest_baseline = None
+    if not events_path.exists():
+        return latest_obs, latest_baseline
+    for line in iter_lines_reverse(events_path):
+        try:
+            ev = json.loads(line)
+        except Exception:
+            continue
+        name = ev.get('event')
+        if name == 'cost_observation' and latest_obs is None:
+            latest_obs = ev.get('total_cost_usd')
+        elif name == 'user_prompt_submit' and latest_baseline is None:
+            latest_baseline = ev.get('baseline_cost_usd')
+        if latest_obs is not None and latest_baseline is not None:
+            break
+    return latest_obs, latest_baseline
+
+
+delta_cost = None
+if session_id and cost_data.get('total_cost_usd') is not None:
+    try:
+        _session_dir = USAGE_STATE_DIR / session_id
+        _session_dir.mkdir(parents=True, exist_ok=True)
+        _events_path = _session_dir / 'events.jsonl'
+        _latest_obs, _latest_baseline = read_session_state(_events_path)
+        _cost_now = float(cost_data['total_cost_usd'])
+        if _latest_obs is None or abs(float(_latest_obs) - _cost_now) > 1e-9:
+            _ev = {
+                'v': 1,
+                'ts': datetime.now(timezone.utc).isoformat(),
+                'source': 'statusline',
+                'event': 'cost_observation',
+                'total_cost_usd': _cost_now,
+            }
+            with open(_events_path, 'a') as _f:
+                _f.write(json.dumps(_ev) + '\n')
+        if _latest_baseline is not None:
+            delta_cost = _cost_now - float(_latest_baseline)
+    except Exception:
+        delta_cost = None
+
 
 dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
 branch = get_git_branch()
@@ -104,7 +173,10 @@ if current_usage:
 
 total_cost = cost_data.get('total_cost_usd')
 if total_cost is not None:
-    parts.append(f"${total_cost:.2f}")
+    if delta_cost is not None:
+        parts.append(f"${total_cost:.2f},${delta_cost:.2f}")
+    else:
+        parts.append(f"${total_cost:.2f}")
 
 if current_usage and context_window_size:
     used = (current_usage.get('input_tokens', 0) +
