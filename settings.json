@@ -244,7 +244,6 @@
   },
   "enabledPlugins": {
     "hookify@claude-plugins-official": true,
-    "quick-review@yonatans-cc-marketplace": true,
     "context7@claude-plugins-official": true,
     "mats@alignment-hive": true,
     "code-simplifier@claude-plugins-official": true,
