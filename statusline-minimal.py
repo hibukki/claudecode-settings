@@ -109,11 +109,18 @@ def iter_lines_reverse(path, chunk_size=4096):
 
 
 def read_session_state(events_path):
-    """Return (latest_cost_obs, latest_baseline) scanning in reverse."""
+    """Return (latest_cost_obs, latest_baseline, turn_end_usages_since_ups).
+
+    `turn_end_usages_since_ups` lists every turn_end event newer than the
+    latest user_prompt_submit. Scanning stops once the ups boundary is found
+    AND the latest cost_observation has been located.
+    """
     latest_obs = None
     latest_baseline = None
+    usages = []
+    seen_ups = False
     if not events_path.exists():
-        return latest_obs, latest_baseline
+        return latest_obs, latest_baseline, usages
     for line in iter_lines_reverse(events_path):
         try:
             ev = json.loads(line)
@@ -122,40 +129,64 @@ def read_session_state(events_path):
         name = ev.get('event')
         if name == 'cost_observation' and latest_obs is None:
             latest_obs = ev.get('total_cost_usd')
-        elif name == 'user_prompt_submit' and latest_baseline is None:
+        elif name == 'user_prompt_submit' and not seen_ups:
             latest_baseline = ev.get('baseline_cost_usd')
-        if latest_obs is not None and latest_baseline is not None:
+            seen_ups = True
+        elif name == 'turn_end' and not seen_ups:
+            u = ev.get('usage')
+            if u:
+                usages.append(u)
+        if latest_obs is not None and seen_ups:
             break
-    return latest_obs, latest_baseline
+    return latest_obs, latest_baseline, usages
 
 
 delta_cost = None
-if session_id and cost_data.get('total_cost_usd') is not None:
+cache_pct_since_ups = None
+if session_id:
     try:
         _session_dir = USAGE_STATE_DIR / session_id
         _session_dir.mkdir(parents=True, exist_ok=True)
         _events_path = _session_dir / 'events.jsonl'
-        _latest_obs, _latest_baseline = read_session_state(_events_path)
-        _cost_now = float(cost_data['total_cost_usd'])
-        if _latest_obs is None or abs(float(_latest_obs) - _cost_now) > 1e-9:
-            _ev = {
-                'v': 1,
-                'ts': datetime.now(timezone.utc).isoformat(),
-                'source': 'statusline',
-                'event': 'cost_observation',
-                'total_cost_usd': _cost_now,
-            }
-            with open(_events_path, 'a') as _f:
-                _f.write(json.dumps(_ev) + '\n')
-        if _latest_baseline is not None:
-            delta_cost = _cost_now - float(_latest_baseline)
+        _latest_obs, _latest_baseline, _usages = read_session_state(_events_path)
+        _cost_now = cost_data.get('total_cost_usd')
+        if _cost_now is not None:
+            _cost_now = float(_cost_now)
+            if _latest_obs is None or abs(float(_latest_obs) - _cost_now) > 1e-9:
+                _ev = {
+                    'v': 1,
+                    'ts': datetime.now(timezone.utc).isoformat(),
+                    'source': 'statusline',
+                    'event': 'cost_observation',
+                    'total_cost_usd': _cost_now,
+                }
+                with open(_events_path, 'a') as _f:
+                    _f.write(json.dumps(_ev) + '\n')
+            if _latest_baseline is not None:
+                delta_cost = _cost_now - float(_latest_baseline)
+        if _usages:
+            _cr = sum(u.get('cache_read_input_tokens', 0) for u in _usages)
+            _cc = sum(u.get('cache_creation_input_tokens', 0) for u in _usages)
+            _it = sum(u.get('input_tokens', 0) for u in _usages)
+            _tot = _cr + _cc + _it
+            if _tot > 0:
+                cache_pct_since_ups = _cr / _tot * 100
     except Exception:
         delta_cost = None
+        cache_pct_since_ups = None
 
 
 dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
 branch = get_git_branch()
 parts = []
+
+def _cache_color(pct):
+    if pct >= 80:
+        return '\033[32m'
+    if pct >= 50:
+        return '\033[33m'
+    return '\033[31m'
+
 
 if current_usage:
     cache_read = current_usage.get('cache_read_input_tokens', 0)
@@ -163,13 +194,14 @@ if current_usage:
     total_input = (current_usage.get('input_tokens', 0) + cache_read + cache_create)
     if total_input > 0:
         hit_pct = cache_read / total_input * 100
-        if hit_pct >= 80:
-            color = '\033[32m'
-        elif hit_pct >= 50:
-            color = '\033[33m'
+        last_col = _cache_color(hit_pct)
+        last_str = f"{last_col}{hit_pct:.0f}%\033[0m"
+        if cache_pct_since_ups is not None:
+            ups_col = _cache_color(cache_pct_since_ups)
+            ups_str = f"{ups_col}{cache_pct_since_ups:.0f}%\033[0m"
         else:
-            color = '\033[31m'
-        parts.append(f"cache: {color}{hit_pct:.0f}%\033[0m")
+            ups_str = '\033[90m—\033[0m'
+        parts.append(f"cache: {last_str},{ups_str}")
 
 total_cost = cost_data.get('total_cost_usd')
 if total_cost is not None:

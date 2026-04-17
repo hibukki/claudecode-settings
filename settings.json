@@ -247,6 +247,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 /Users/yonatancale/.claude/scripts/usage-log-stop.py",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
