@@ -245,7 +245,6 @@
   "enabledPlugins": {
     "hookify@claude-plugins-official": true,
     "quick-review@yonatans-cc-marketplace": true,
-    "dev-browser@dev-browser-marketplace": true,
     "context7@claude-plugins-official": true,
     "mats@alignment-hive": true,
     "code-simplifier@claude-plugins-official": true,
@@ -278,6 +277,6 @@
   "awaySummaryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
-  "voiceEnabled": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true
 }
