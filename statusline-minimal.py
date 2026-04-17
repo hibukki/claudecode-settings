@@ -2,7 +2,11 @@
 import sys
 import json
 import subprocess
+import time
 from datetime import datetime
+
+_t_start = time.perf_counter()
+_SELF_TIMING_THRESHOLD_MS = 1000
 
 input_data = json.load(sys.stdin)
 
@@ -177,4 +181,8 @@ if seven_d.get('used_percentage') is not None:
     r_str = format_rate(rate)
     parts.append(f"{pct}%{r_str}/{reset}" if reset else f"{pct}%{r_str}")
 
-print(' | '.join(parts))
+_render = ' | '.join(parts)
+_elapsed_ms = (time.perf_counter() - _t_start) * 1000
+if _elapsed_ms >= _SELF_TIMING_THRESHOLD_MS:
+    _render += f" \033[90m[{int(_elapsed_ms)}ms]\033[0m"
+print(_render)
