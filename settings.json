@@ -713,7 +713,8 @@
     "telegram@claude-plugins-official": true,
     "precis@precis": true,
     "codex@codex-plugin-cc": true,
-    "quick-review@yonatans-cc-marketplace": true
+    "quick-review@yonatans-cc-marketplace": true,
+    "vercel@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "codex-plugin-cc": {
@@ -735,6 +736,11 @@
   "awaySummaryEnabled": false,
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
+  "verbose": true,
+  "autoCompactEnabled": false,
+  "remoteControlAtStartup": true,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "tui": "fullscreen"
 }
