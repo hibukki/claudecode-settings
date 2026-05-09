@@ -43,7 +43,7 @@ DRY just like with normal code: link to existing sections instead of repeating t
 
 ## React
 
-I usually use this template: `npm create vite@latest . -- --template react-ts`.
+I usually use this template: `npm create vite@latest . -- --template react-ts`. (sometimes with pnpm/bun)
 
 ## npm
 
