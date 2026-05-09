@@ -88,19 +88,6 @@ Prefer using official docs (e.g docs.anthropic.com) over blogs (e.g medium.com).
 Using an MCP server for docs (e.g context7) is even better.
 Notify the user if: You can't get official docs / the mcp server is unavailable but would help you / the mcp server doesn't seem to be performing well, e.g returning incomplete results. The user should know about this so they can help.
 
-# Subagents
-
-Use as many as you want. Running agents in the background
-
-## Giving skills to subagents
-
-Subagents have permission to use skills but don't know which ones exist. Include skill names in your prompt:
-
-```text
-You can use the Skill tool with skill="dev-browser:dev-browser" for browser automation.
-For docs, use context7: mcp__plugin_context7_context7__query-docs with libraryId="/sawyerhood/dev-browser"
-```
-
 # New task / asking the user questions
 
 Ask the user as many questions as you want (using the AskUserQuestion tool by default)
