@@ -703,18 +703,19 @@
   "enabledPlugins": {
     "hookify@claude-plugins-official": true,
     "context7@claude-plugins-official": true,
-    "mats@alignment-hive": true,
+    "mats@alignment-hive": false,
     "code-simplifier@claude-plugins-official": true,
     "google-workspace-connector@yonatans-cc-marketplace": true,
     "document-skills@anthropic-agent-skills": true,
-    "data@knowledge-work-plugins": true,
+    "data@knowledge-work-plugins": false,
     "cowork-plugin-management@knowledge-work-plugins": true,
-    "hive@alignment-hive": true,
-    "telegram@claude-plugins-official": true,
+    "hive@alignment-hive": false,
+    "telegram@claude-plugins-official": false,
     "precis@precis": true,
     "codex@codex-plugin-cc": true,
     "quick-review@yonatans-cc-marketplace": true,
-    "vercel@claude-plugins-official": true
+    "google-docs@hibukki-mcp": true,
+    "notion@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "codex-plugin-cc": {
@@ -729,11 +730,18 @@
         "source": "github",
         "repo": "anthropics/skills"
       }
+    },
+    "hibukki-mcp": {
+      "source": {
+        "source": "github",
+        "repo": "hibukki/docs_mcp"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "medium",
   "awaySummaryEnabled": false,
+  "tui": "fullscreen",
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "verbose": true,
@@ -741,6 +749,5 @@
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "tui": "fullscreen"
+  "voiceEnabled": true
 }
