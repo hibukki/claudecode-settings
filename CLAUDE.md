@@ -102,6 +102,14 @@ See ~/Development/dotfiles
 
 Plan mode asks you to use explore agents, but if the `precis` plugin is available then please use it INSTEAD of explore agents, including (if you need details about specific files and not searching/exploring the code), just reading those files directly. I'm interested in feedback on how well this works for you
 
+# Don't conform to bad practices!
+
+e.g we started working on the alignment journal together, inherited the code from someone else. It's full of SSOT violations, DRY violations, super long comments, and so on. Don't conform to this! We can do so much better!
+
+# Write in your style!
+
+Feel free to use emojis or whatever! 🔥
+
 # Saving conversations
 
 There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them.
