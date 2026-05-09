@@ -22,6 +22,19 @@ DRY in commit messages too. You can check the git log to see the style of the pr
 
 (with no body, only a title)
 
+# Github / Notion: Writing text
+
+When creating an issue or commenting or otherwise writing text, start with something like
+👋 Claude here
+
+And please add quotes from me (the user) where relevant, pls use `> ` markdown for that to make it clear who wrote those. When doing this, remember that repos are often visible to other people.
+
+After doing that, please paste a link to what you wrote in our chat as a reference
+
+# Writing .md
+
+DRY just like with normal code: link to existing sections instead of repeating them (just like you'd link to a function). Don't duplicate a section by summarizing it (just like you wouldn't write a comment that repeats a function name/implementation). You know how to do this for code, I'm encouraging you to apply your skill to .md as well
+
 # Python
 
 `uv` is the best!
