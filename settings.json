@@ -739,7 +739,7 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "awaySummaryEnabled": false,
   "tui": "fullscreen",
   "showThinkingSummaries": true,
