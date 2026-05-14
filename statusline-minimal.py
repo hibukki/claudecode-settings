@@ -180,6 +180,65 @@ dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
 branch = get_git_branch()
 parts = []
 
+def get_session_resources():
+    """RSS bytes + CPU% for this CC session (parent process + its descendants).
+
+    Walks the process tree rooted at our parent (the `claude` process), which
+    covers MCP servers, subagents, hook scripts, and bash subprocesses spawned
+    by this session. One `ps` call total.
+    """
+    try:
+        ppid = os.getppid()
+        result = subprocess.run(
+            ['ps', '-Ao', 'pid=,ppid=,rss=,pcpu='],
+            capture_output=True, text=True, timeout=2
+        )
+        if result.returncode != 0:
+            return None
+        children = {}
+        info = {}
+        for line in result.stdout.splitlines():
+            cols = line.split()
+            if len(cols) < 4:
+                continue
+            try:
+                pid = int(cols[0]); pp = int(cols[1])
+                rss_kb = int(cols[2]); cpu = float(cols[3])
+            except ValueError:
+                continue
+            children.setdefault(pp, []).append(pid)
+            info[pid] = (rss_kb, cpu)
+        total_rss_kb = 0
+        total_cpu = 0.0
+        stack = [ppid]
+        seen = set()
+        while stack:
+            p = stack.pop()
+            if p in seen:
+                continue
+            seen.add(p)
+            if p in info:
+                r, c = info[p]
+                total_rss_kb += r
+                total_cpu += c
+            stack.extend(children.get(p, []))
+        return total_rss_kb * 1024, total_cpu
+    except Exception:
+        return None
+
+
+def format_resources(stats):
+    if not stats:
+        return ''
+    rss_bytes, cpu = stats
+    gb = rss_bytes / (1024 ** 3)
+    if gb >= 1:
+        ram_str = f"{gb:.1f}G"
+    else:
+        ram_str = f"{rss_bytes / (1024 ** 2):.0f}M"
+    return f"\033[90m{ram_str} {cpu:.0f}%\033[0m"
+
+
 def _cache_color(pct):
     if pct >= 80:
         return '\033[32m'
@@ -226,9 +285,6 @@ if current_usage and context_window_size:
 
 if dir_name:
     parts.append(dir_name)
-
-if branch:
-    parts.append(f"({branch})")
 
 ci = get_ci_status(branch)
 if ci:
@@ -284,6 +340,10 @@ if seven_d.get('used_percentage') is not None:
     rate = burn_rate(seven_d['used_percentage'], t_pct)
     r_str = format_rate(rate)
     parts.append(f"{pct}%{r_str}/{reset}" if reset else f"{pct}%{r_str}")
+
+_res = format_resources(get_session_resources())
+if _res:
+    parts.append(_res)
 
 _render = ' | '.join(parts)
 _elapsed_ms = (time.perf_counter() - _t_start) * 1000
