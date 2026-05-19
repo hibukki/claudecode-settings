@@ -6,6 +6,7 @@ import subprocess
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 _t_start = time.perf_counter()
 _SELF_TIMING_THRESHOLD_MS = 1000
@@ -176,7 +177,22 @@ if session_id:
         cache_pct_since_ups = None
 
 
-dir_name = current_dir.rstrip('/').split('/')[-1] if current_dir else ''
+def make_dir_label(path):
+    if not path:
+        return ''
+    path = path.rstrip('/')
+    segs = path.split('/')
+    label = segs[-1]
+    # .../<project>/.claude/worktrees/<wt> → opencon/w:jolly-fermi-3293
+    for i in range(len(segs) - 2):
+        if (segs[i] == '.claude' and segs[i + 1] == 'worktrees'
+                and i >= 1 and i + 2 < len(segs)):
+            label = f"{segs[i - 1]}/w:{segs[i + 2]}"
+            break
+    url = 'file://' + quote(path, safe='/')
+    return f"\x1b]8;;{url}\x1b\\{label}\x1b]8;;\x1b\\"
+
+dir_label = make_dir_label(current_dir)
 branch = get_git_branch()
 parts = []
 
@@ -283,8 +299,8 @@ if current_usage and context_window_size:
         color = '\033[32m'   # green
     parts.append(f"{color}{used_pct:.0f}% used\033[0m")
 
-if dir_name:
-    parts.append(dir_name)
+if dir_label:
+    parts.append(dir_label)
 
 ci = get_ci_status(branch)
 if ci:
