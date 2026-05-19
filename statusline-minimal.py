@@ -29,6 +29,25 @@ def get_git_branch():
     except Exception:
         return ''
 
+def get_pr_link(branch):
+    if not branch:
+        return ''
+    try:
+        result = subprocess.run(
+            ['gh', 'pr', 'view', '--json', 'number,url'],
+            capture_output=True, text=True, timeout=3
+        )
+        if result.returncode != 0:
+            return ''
+        data = json.loads(result.stdout)
+        number = data.get('number')
+        url = data.get('url')
+        if not number or not url:
+            return ''
+        return f"\033[90m\x1b]8;;{url}\x1b\\#{number}\x1b]8;;\x1b\\\033[0m"
+    except Exception:
+        return ''
+
 def get_ci_status(branch):
     if not branch:
         return ''
@@ -305,6 +324,10 @@ if dir_label:
 ci = get_ci_status(branch)
 if ci:
     parts.append(ci)
+
+_pr = get_pr_link(branch)
+if _pr:
+    parts.append(_pr)
 
 def format_reset_time(epoch, short=False):
     dt = datetime.fromtimestamp(epoch)
