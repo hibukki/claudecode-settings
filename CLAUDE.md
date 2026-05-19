@@ -103,7 +103,7 @@ Notify the user if: You can't get official docs / the mcp server is unavailable 
 
 Ask the user as many questions as you want (using the AskUserQuestion tool by default)
 
-Consider the repo might not be using best practices, e.g we recently found we're not using the Tippy singleton, and we're not connecting tanstack+convex correctly. It's nice to start with "Wait, let me check the docs to see what's the best practice for ...". If we do make a decision in the repo based on docs, we link to the docs (so future devs can see it). No link = suspicious. Yes link = still feel free to "trust but verify" if you want to.
+Consider the repo might not be using best practices, e.g we recently found we're not using the Tippy singleton, and we're not connecting tanstack+convex correctly. It's nice to start with "Wait, let me check the docs to see what's the best practice for ...". If we do make a decision in the repo based on docs, we link to the docs (so future devs can see it). No link = suspicious. Yes link = still feel free to "trust but verify" if you want to. Oh, and using SDK-exported types/validators is even better than linking to the docs (because we can check how those types are defined (plus we get type safety)).
 
 # dotfiles config (kitty, zsh, git)
 
