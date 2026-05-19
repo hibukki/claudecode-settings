@@ -31,9 +31,20 @@ And please add quotes from me (the user) where relevant, pls use `> ` markdown f
 
 After doing that, please paste a link to what you wrote in our chat as a reference
 
-# Writing .md
+# Writing .md (including memories)
 
 DRY just like with normal code: link to existing sections instead of repeating them (just like you'd link to a function). Don't duplicate a section by summarizing it (just like you wouldn't write a comment that repeats a function name/implementation). You know how to do this for code, I'm encouraging you to apply your skill to .md as well
+
+## Example:
+
+Too long:
+(in the context of hitting codex usage limits)
+> **Fallback:** run the `/quick-review` skill (uses the `quick-review:quick-reviewer` agent) instead of retrying codex. Don't burn more attempts on codex once the limit is hit.
+
+Shorter:
+> Fallback: run /quick-review
+
+avoids explaining things multiple times, avoids a "why" (burn attempts) that wasn't mentioned by the user
 
 # Python
 
