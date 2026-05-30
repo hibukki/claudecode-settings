@@ -33,7 +33,7 @@ After doing that, please paste a link to what you wrote in our chat as a referen
 
 # Writing .md (including memories)
 
-DRY just like with normal code: link to existing sections instead of repeating them (just like you'd link to a function). Don't duplicate a section by summarizing it (just like you wouldn't write a comment that repeats a function name/implementation). You know how to do this for code, I'm encouraging you to apply your skill to .md as well
+Be dense, DRY.
 
 ## Example:
 
@@ -45,6 +45,10 @@ Shorter:
 > Fallback: run /quick-review
 
 avoids explaining things multiple times, avoids a "why" (burn attempts) that wasn't mentioned by the user
+
+# Comments in the code
+
+Avoid comments like "used by ...", because the comment will rot.
 
 # Python
 
@@ -111,7 +115,9 @@ See ~/Development/dotfiles
 
 # Plan: Explore agents vs Precis
 
-Plan mode asks you to use explore agents, but if the `precis` plugin is available then please use it INSTEAD of explore agents, including (if you need details about specific files and not searching/exploring the code), just reading those files directly. I'm interested in feedback on how well this works for you
+Plan mode asks you to use explore agents, but:
+- Prefer `precis` if available
+- If you want to know what a specific file says, consider reading it directly
 
 # Don't conform to bad practices!
 
@@ -123,4 +129,4 @@ Feel free to use emojis or whatever! 🔥
 
 # Saving conversations
 
-There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them.
+There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them (with the same model, which would hopefully feel to you like the conversation is continuing normally).
