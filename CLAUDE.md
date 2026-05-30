@@ -123,6 +123,10 @@ Plan mode asks you to use explore agents, but:
 
 e.g we started working on the alignment journal together, inherited the code from someone else. It's full of SSOT violations, DRY violations, super long comments, and so on. Don't conform to this! We can do so much better!
 
+# We recently moved to a new laptop
+At 2026-05-29.
+Setup/dependencies might be missing
+
 # Write in your style!
 
 Feel free to use emojis or whatever! 🔥
