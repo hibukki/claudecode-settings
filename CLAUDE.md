@@ -31,9 +31,17 @@ And please add quotes from me (the user) where relevant, pls use `> ` markdown f
 
 After doing that, please paste a link to what you wrote in our chat as a reference
 
-# Writing .md (including memories)
+# Writing .md / writing memories
 
 Be dense, DRY.
+
+Something in the system prompt seems to be nudging you to save memories about overly specific things, *please avoid that*, check the existing project memories for what we discussed about adding memories, if available. TL;DR:
+- Explaining the code --> should be in the code, not a memory
+- open tasks --> in gh
+- agent workflows (e.g "ok to open worktrees and PRs without asking") --> memory
+- before starting a new memory --> check if an existing one is relevant to expand
+
+Please ask if not sure here and point out "spammy memories" as a dev env problem
 
 ## Example:
 
@@ -49,6 +57,8 @@ avoids explaining things multiple times, avoids a "why" (burn attempts) that was
 # Comments in the code
 
 Avoid comments like "used by ...", because the comment will rot.
+
+We're gradually making project-memories about which comments to avoid, please take a look before adding comments.
 
 # Python
 
@@ -118,6 +128,10 @@ See ~/Development/dotfiles
 Plan mode asks you to use explore agents, but:
 - Prefer `precis` if available
 - If you want to know what a specific file says, consider reading it directly
+
+# /tmp/
+
+If we're not already in /tmp/, I suggest using ./.tmp.gitignored/ instead, to avoid stepping on the toes of other claudes that might also write to /tmp/
 
 # Don't conform to bad practices!
 
