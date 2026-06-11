@@ -201,7 +201,7 @@ if session_id:
 def project_color(name):
     """Deterministic per-name truecolor ANSI prefix. crc32 (stable, unlike hash())
     drives hue; lightness also varies so near-identical hues stay distinguishable."""
-    h = zlib.crc32(name.encode())
+    h = zlib.crc32(name.encode() + b"1105")  # tuned salt, not arbitrary
     hue = h / 0x100000000
     light = 0.55 + (h >> 8 & 0xff) / 0xff * 0.2
     r, g, b = colorsys.hls_to_rgb(hue, light, 0.6)
