@@ -4,6 +4,8 @@ import os
 import json
 import subprocess
 import time
+import zlib
+import colorsys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
@@ -196,20 +198,33 @@ if session_id:
         cache_pct_since_ups = None
 
 
+def project_color(name):
+    """Deterministic per-name truecolor ANSI prefix. crc32 (stable, unlike hash())
+    drives hue; lightness also varies so near-identical hues stay distinguishable."""
+    h = zlib.crc32(name.encode())
+    hue = h / 0x100000000
+    light = 0.55 + (h >> 8 & 0xff) / 0xff * 0.2
+    r, g, b = colorsys.hls_to_rgb(hue, light, 0.6)
+    return f"\033[38;2;{int(r * 255)};{int(g * 255)};{int(b * 255)}m"
+
+
 def make_dir_label(path):
     if not path:
         return ''
     path = path.rstrip('/')
     segs = path.split('/')
-    label = segs[-1]
+    project = segs[-1]
+    suffix = ''
     # .../<project>/.claude/worktrees/<wt> → opencon/w:jolly-fermi-3293
     for i in range(len(segs) - 2):
         if (segs[i] == '.claude' and segs[i + 1] == 'worktrees'
                 and i >= 1 and i + 2 < len(segs)):
-            label = f"{segs[i - 1]}/w:{segs[i + 2]}"
+            project = segs[i - 1]
+            suffix = f"/w:{segs[i + 2]}"
             break
+    colored = f"{project_color(project)}{project}\033[0m{suffix}"
     url = 'file://' + quote(path, safe='/')
-    return f"\x1b]8;;{url}\x1b\\{label}\x1b]8;;\x1b\\"
+    return f"\x1b]8;;{url}\x1b\\{colored}\x1b]8;;\x1b\\"
 
 dir_label = make_dir_label(current_dir)
 branch = get_git_branch()
