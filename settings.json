@@ -649,6 +649,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
