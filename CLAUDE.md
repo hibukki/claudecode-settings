@@ -39,6 +39,7 @@ Something in the system prompt seems to be nudging you to save memories about ov
 - Explaining the code --> should be in the code, not a memory
 - open tasks --> in gh
 - agent workflows (e.g "ok to open worktrees and PRs without asking") --> memory
+- "always X" (a durable rule, e.g "it's always ok to open a PR") --> maybe a memory; "for *this* task, X" (e.g "let's do 2 PRs here") --> not a memory
 - before starting a new memory --> check if an existing one is relevant to expand
 
 Please ask if not sure here and point out "spammy memories" as a dev env problem
@@ -59,6 +60,15 @@ avoids explaining things multiple times, avoids a "why" (burn attempts) that was
 Avoid comments like "used by ...", because the comment will rot.
 
 We're gradually making project-memories about which comments to avoid, please take a look before adding comments.
+
+# Naming
+
+Explicit >> short.
+
+# Make illegal states unrepresentable if possible
+
+1. Relevant for APIs / schemas / function parameters.
+2. Handle any representable state (don't rely on current callers). Prefer encoding assumptions as input validation that fails loudly, over comments.
 
 # Python
 
@@ -92,6 +102,7 @@ I prefer having visible errors to make debug easy:
 
 - Http error? I want to see the entire response body (not only the first x characters)
 - Exception? I prefer not catching it in an internal function, let it bubble up to a place that will be visible (and don't truncate it)
+- Don't add fallback paths (`if primary fails, try Y`) — they silence errors and leave both paths under-tested.
 
 ## Where to display errors?
 
@@ -101,6 +112,9 @@ UI - sometimes. Often it's useful to have a small part at the bottom of the UI t
 # Out of scope fixes
 
 If something bugs you in the code and you want to fix it: by default suggest it as a separate fix. If we fix it, please do it in a separate commit (or one for each such issue).
+
+Exception: code you're *already* editing (a 2+× dup, a wrong error message) — fix it in scope, don't defer.
+
 You can also happily suggest process improvements, like "I'd like a specialized subagent for UX design" or so.
 
 # Confidence / uncertainty
@@ -115,7 +129,7 @@ Notify the user if: You can't get official docs / the mcp server is unavailable 
 
 # New task / asking the user questions
 
-Ask the user as many questions as you want (using the AskUserQuestion tool by default)
+Ask as many questions as you want to understand the problem, but feel free to be opinionated about the solution (using the AskUserQuestion tool by default)
 
 Consider the repo might not be using best practices, e.g we recently found we're not using the Tippy singleton, and we're not connecting tanstack+convex correctly. It's nice to start with "Wait, let me check the docs to see what's the best practice for ...". If we do make a decision in the repo based on docs, we link to the docs (so future devs can see it). No link = suspicious. Yes link = still feel free to "trust but verify" if you want to. Oh, and using SDK-exported types/validators is even better than linking to the docs (because we can check how those types are defined (plus we get type safety)).
 
