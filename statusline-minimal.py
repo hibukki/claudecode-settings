@@ -230,6 +230,10 @@ dir_label = make_dir_label(current_dir)
 branch = get_git_branch()
 parts = []
 
+model_letter = (input_data.get('model', {}).get('display_name') or '')[:1].upper()
+if model_letter:
+    parts.append(f"\033[1m{model_letter}\033[0m")
+
 def get_session_resources():
     """RSS bytes + CPU% for this CC session (parent process + its descendants).
 
