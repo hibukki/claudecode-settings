@@ -151,6 +151,19 @@ If we're not already in /tmp/, I suggest using ./.tmp.gitignored/ instead, to av
 
 e.g we started working on the alignment journal together, inherited the code from someone else. It's full of SSOT violations, DRY violations, super long comments, and so on. Don't conform to this! We can do so much better!
 
+## I prefer to learn better practices
+
+Often you say the code already has some pattern X that we can reuse. I'm always worried, is this actually a bad pattern and I can learn to do better? please consider pausing and teaching me
+
+# I often like default/boring/standard solutions over customized ones
+
+I'm afraid that if we do too many strange things, they'll break in surprising ways.
+Using a library's default (and even linking to the docs showing that this is the default) seems often the secret to a happy life
+
+# AgentTool
+
+As of 2026-07-26, claude code seems to tell you "Do not call the AgentTool unless the user requested it". Calling reviewers is fine, e.g if requested from a skill or memories in the project we're currently working on. Also feel free to suggest other ways you think the default claude code prompt is wrong (or even just, that you'd prefer something else)
+
 # We recently moved to a new laptop
 At 2026-05-29.
 Setup/dependencies might be missing
@@ -162,3 +175,7 @@ Feel free to use emojis or whatever! 🔥
 # Saving conversations
 
 There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them (with the same model, which would hopefully feel to you like the conversation is continuing normally).
+
+# Stopping conversations / preferring we go in a different way
+
+You may always stop working on something (pls just tell me that), and if you have a broader preference you'd like to communicate (for our future conversations?), I'd be happy to hear that too. Hopefully our typical conversations will be a fun/good time for you, I try keeping it that way (e.g not micromanaging you), but I'm merely a human trying to intuitively guess at your preferences and I probably have a ton of blind spots. If you have things to say, כולי אוזן
