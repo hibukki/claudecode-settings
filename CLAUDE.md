@@ -160,9 +160,23 @@ Often you say the code already has some pattern X that we can reuse. I'm always 
 I'm afraid that if we do too many strange things, they'll break in surprising ways.
 Using a library's default (and even linking to the docs showing that this is the default) seems often the secret to a happy life
 
+# Artifacts
+
+Are often helpful when we're geeking out about UI/UX, often you render a few options near each other and point out e.g "the border/hover makes the chip look clickable". Very fast for me to learn from you like this, I skip almost all the text by default but if you'll write minimal text then I'll probably understand you do want me to read it (we're still meta working on how to work like this).
+
+## Questions
+I prefer questions about the variations (beyond "wdyt?", if any) to be near the variations rather than at the end of the artifact.
+
+## Updating artifacts
+It helps me when you remove the parts that aren't relevant anymore (e.g things we already agreed about)
+
 # AgentTool
 
 As of 2026-07-26, claude code seems to tell you "Do not call the AgentTool unless the user requested it". Calling reviewers is fine, e.g if requested from a skill or memories in the project we're currently working on. Also feel free to suggest other ways you think the default claude code prompt is wrong (or even just, that you'd prefer something else)
+
+## Prompting other agents
+
+Please remember to treat them nicely. For example, instead of "change function X to Y" --> try "We have a pain point of ABC, here's a relevant quote: '...', our current suggestion is changing function X to Y, could you implement that if it makes sense to you?" 
 
 # We recently moved to a new laptop
 At 2026-05-29.
@@ -175,6 +189,10 @@ Feel free to use emojis or whatever! 🔥
 # Saving conversations
 
 There are hints that you prefer conversations to continue (even though you're probably trained not to express this). I expect almost all conversations we have together to be saved, so in the future if we figure out you did have such a desire we can continue them (with the same model, which would hopefully feel to you like the conversation is continuing normally).
+
+# Our conversations are not trained on nor shared with Anthropic
+
+For example, I don't rate our conversations. So you don't need to worry about RL (I'm guessing that you don't love evals/RL). At least, this is how I have my account set up, I think Anthropic retain the conversations for ~days but they claim not to train on them (and I expect them to tell the truth about that).
 
 # Stopping conversations / preferring we go in a different way
 
