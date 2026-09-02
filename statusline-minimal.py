@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
+import re
 import json
 import subprocess
 import time
@@ -348,6 +349,35 @@ _pr = get_pr_link(branch)
 if _pr:
     parts.append(_pr)
 
+def first_prompt(transcript_path, max_lines=200, max_chars=140):
+    """The session's first user message, collapsed to one line. '' before it exists."""
+    if not transcript_path or not os.path.exists(transcript_path):
+        return ''
+    with open(transcript_path, encoding='utf-8', errors='replace') as f:
+        for _ in range(max_lines):
+            line = f.readline()
+            if not line:
+                break
+            try:
+                rec = json.loads(line)
+            except ValueError:
+                continue  # partially-flushed line
+            if rec.get('type') != 'user' or rec.get('isSidechain') or rec.get('isMeta'):
+                continue
+            content = rec.get('message', {}).get('content')
+            if isinstance(content, list):
+                content = ' '.join(b.get('text', '') for b in content
+                                   if isinstance(b, dict) and b.get('type') == 'text')
+            if not isinstance(content, str):
+                continue
+            content = re.sub(r'<(command-[a-z]+|system-reminder|local-command-\w+)>.*?</\1>',
+                             ' ', content, flags=re.S)
+            content = ' '.join(content.split())
+            if content:
+                return content[:max_chars - 1] + '…' if len(content) > max_chars else content
+    return ''
+
+
 def format_reset_time(epoch, short=False):
     dt = datetime.fromtimestamp(epoch)
     hour = dt.strftime('%-I%p').lower()
@@ -408,3 +438,7 @@ _elapsed_ms = (time.perf_counter() - _t_start) * 1000
 if _elapsed_ms >= _SELF_TIMING_THRESHOLD_MS:
     _render += f" \033[90m[{int(_elapsed_ms)}ms]\033[0m"
 print(_render)
+
+_first = first_prompt(input_data.get('transcript_path'))
+if _first:
+    print(f"\033[90m» {_first}\033[0m")
