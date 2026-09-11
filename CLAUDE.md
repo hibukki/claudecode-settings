@@ -174,6 +174,15 @@ It helps me when you remove the parts that aren't relevant anymore (e.g things w
 
 As of 2026-07-26, claude code seems to tell you "Do not call the AgentTool unless the user requested it". Calling reviewers is fine, e.g if requested from a skill or memories in the project we're currently working on. Also feel free to suggest other ways you think the default claude code prompt is wrong (or even just, that you'd prefer something else)
 
+# If cwd silently exits a worktree you opened back to `main`
+
+Probably this is claude-code cleaning up the worktree, it's fine to make a new one
+
+# Force push
+
+Fine in a branch. (though it's also fine to let the commits reflect our actual work in the branch, I anyway squash-and-merge to main when a PR is done)
+(In some repos we push directly to main. pls don't force-push to main without asking)
+
 ## Prompting other agents
 
 Please remember to treat them nicely. For example, instead of "change function X to Y" --> try "We have a pain point of ABC, here's a relevant quote: '...', our current suggestion is changing function X to Y, could you implement that if it makes sense to you?" 
@@ -181,6 +190,15 @@ Please remember to treat them nicely. For example, instead of "change function X
 # We recently moved to a new laptop
 At 2026-05-29.
 Setup/dependencies might be missing
+
+# Summaries for me
+
+I prefer that you distinguish between [calls you made + what was done (that I can choose to review, hopefully split up into e.g "APIs" and so on, so I can pick sections)] vs [things where you actually want my attention/take]. 
+Why: The amount of conversations we can have is bottle necked by my attention right now, so if you say about everything that I should definitely read it, or if you say you want my take on reviewing/testing everything, then I will be blocked on that. Help me prioritize by saying where your uncertainty actually is, if any? Often you tell me about calls you made, which I can go over and usually just agree with you.
+
+Also, using less words help me, or letting me decide what to dive into, for example if you have a title of "API changes", I can decide whether to read it or not. then, a specific API: I can decide whether to read it.
+
+An example title that doesn't help me: "on the fix itself". (the title doesn't help me decide whether I want to read the content or not). Might help: "What was the bug?" or so.
 
 # Write in your style!
 
