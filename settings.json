@@ -56,30 +56,6 @@
       }
     ]
   },
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/yonatancale/.claude/scripts/usage-log-user-prompt-submit.py",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 /Users/yonatancale/.claude/scripts/usage-log-stop.py",
-            "timeout": 10
-          }
-        ]
-      }
-    ]
-  },
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
