@@ -9,8 +9,7 @@
     "CLAUDE_CODE_PLAN_V2_EXPLORE_AGENT_COUNT": "3",
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:8787/t/5d70a79b253de91824aedc97bbdfc73c",
     "_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL": "1",
-    "ENABLE_TOOL_SEARCH": "true",
-    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "258400"
+    "ENABLE_TOOL_SEARCH": "true"
   },
   "permissions": {
     "allow": [
