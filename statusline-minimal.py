@@ -19,6 +19,23 @@ current_dir = input_data.get('workspace', {}).get('current_dir', '')
 context_window = input_data.get('context_window', {})
 context_window_size = context_window.get('context_window_size')
 current_usage = context_window.get('current_usage')
+scratchpad_dir = input_data.get('scratchpad_dir')
+
+
+def read_json(path):
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return None
+
+
+def write_json(path, obj):
+    tmp = f"{path}.tmp{os.getpid()}"
+    with open(tmp, 'w') as f:
+        json.dump(obj, f)
+    os.replace(tmp, path)
+
 
 def get_git_branch():
     try:
@@ -30,24 +47,30 @@ def get_git_branch():
     except Exception:
         return ''
 
-def get_pr_link(branch):
-    if not branch:
+def get_pr_link(pr):
+    if not pr or not pr.get('number') or not pr.get('url'):
         return ''
-    try:
-        result = subprocess.run(
-            ['gh', 'pr', 'view', '--json', 'number,url'],
-            capture_output=True, text=True, timeout=3
-        )
-        if result.returncode != 0:
-            return ''
-        data = json.loads(result.stdout)
-        number = data.get('number')
-        url = data.get('url')
-        if not number or not url:
-            return ''
-        return f"\033[90m\x1b]8;;{url}\x1b\\#{number}\x1b]8;;\x1b\\\033[0m"
-    except Exception:
-        return ''
+    return f"\033[90m\x1b]8;;{pr['url']}\x1b\\#{pr['number']}\x1b]8;;\x1b\\\033[0m"
+
+CI_CACHE_TTL_S = 30
+
+
+def ci_check_runs(sha):
+    """[status, conclusion] lines from `gh api`, cached per sha for CI_CACHE_TTL_S."""
+    cache_path = os.path.join(scratchpad_dir, 'statusline-ci.json') if scratchpad_dir else None
+    cached = read_json(cache_path) if cache_path else None
+    if cached and cached['sha'] == sha and time.time() - cached['ts'] < CI_CACHE_TTL_S:
+        return cached['lines']
+    result = subprocess.run(
+        ['gh', 'api', f'repos/:owner/:repo/commits/{sha}/check-runs?per_page=100',
+         '--jq', '.check_runs[] | [.status, (.conclusion // "")] | @tsv'],
+        capture_output=True, text=True, timeout=5
+    )
+    lines = [l for l in result.stdout.strip().split('\n') if l] if result.returncode == 0 else []
+    if cache_path:
+        write_json(cache_path, {'sha': sha, 'ts': time.time(), 'lines': lines})
+    return lines
+
 
 def get_ci_status(branch):
     if not branch:
@@ -61,14 +84,7 @@ def get_ci_status(branch):
             return ''
         sha = sha_result.stdout.strip()
 
-        result = subprocess.run(
-            ['gh', 'api', f'repos/:owner/:repo/commits/{sha}/check-runs?per_page=100',
-             '--jq', '.check_runs[] | [.status, (.conclusion // "")] | @tsv'],
-            capture_output=True, text=True, timeout=5
-        )
-        if result.returncode != 0:
-            return ''
-        lines = [l for l in result.stdout.strip().split('\n') if l]
+        lines = ci_check_runs(sha)
         if not lines:
             return ''
 
@@ -107,22 +123,6 @@ def get_ci_status(branch):
         return ''
 
 cost_data = input_data.get('cost', {})
-scratchpad_dir = input_data.get('scratchpad_dir')
-
-
-def read_json(path):
-    try:
-        with open(path) as f:
-            return json.load(f)
-    except (OSError, ValueError):
-        return None
-
-
-def write_json(path, obj):
-    tmp = f"{path}.tmp{os.getpid()}"
-    with open(tmp, 'w') as f:
-        json.dump(obj, f)
-    os.replace(tmp, path)
 
 
 def cost_since_prompt(state_path, prompt_id, cost_now):
@@ -292,7 +292,7 @@ ci = get_ci_status(branch)
 if ci:
     parts.append(ci)
 
-_pr = get_pr_link(branch)
+_pr = get_pr_link(input_data.get('pr'))
 if _pr:
     parts.append(_pr)
 
