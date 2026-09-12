@@ -12,26 +12,6 @@
     "ENABLE_TOOL_SEARCH": "true",
     "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "258400"
   },
-  "modelPicker": {
-    "options": [
-      {
-        "model": "gpt-6-astra",
-        "label": "GPT-6 Astra"
-      },
-      {
-        "model": "gpt-5.6-sol",
-        "label": "GPT-5.6 Sol"
-      },
-      {
-        "model": "gpt-5.6-terra",
-        "label": "GPT-5.6 Terra"
-      },
-      {
-        "model": "gpt-5.6-luna",
-        "label": "GPT-5.6 Luna"
-      }
-    ]
-  },
   "permissions": {
     "allow": [
       "Read(/Users/yonatancale/.claude/*)",
@@ -56,6 +36,26 @@
     "additionalDirectories": []
   },
   "model": "fable",
+  "modelPicker": {
+    "options": [
+      {
+        "model": "gpt-6-astra",
+        "label": "GPT-6 Astra"
+      },
+      {
+        "model": "gpt-5.6-sol",
+        "label": "GPT-5.6 Sol"
+      },
+      {
+        "model": "gpt-5.6-terra",
+        "label": "GPT-5.6 Terra"
+      },
+      {
+        "model": "gpt-5.6-luna",
+        "label": "GPT-5.6 Luna"
+      }
+    ]
+  },
   "hooks": {
     "UserPromptSubmit": [
       {
