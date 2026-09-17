@@ -55,6 +55,20 @@
       }
     ]
   },
+  "footerLinksRegexes": [
+    {
+      "type": "regex",
+      "pattern": "claude\\.ai/artifact/(?<short>[\\w-]{4})(?<rest>[\\w-]*)",
+      "url": "https://claude.ai/artifact/{short}{rest}",
+      "label": "A:{short}"
+    },
+    {
+      "type": "regex",
+      "pattern": "claude\\.ai/code/artifact/(?<short>[\\w-]{4})(?<rest>[\\w-]*)",
+      "url": "https://claude.ai/code/artifact/{short}{rest}",
+      "label": "A:{short}"
+    }
+  ],
   "statusLine": {
     "type": "command",
     "command": "/Users/yonatancale/.claude/statusline-minimal.py"
