@@ -8,7 +8,7 @@ import time
 import zlib
 import colorsys
 from datetime import datetime
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 
 _t_start = time.perf_counter()
 _SELF_TIMING_THRESHOLD_MS = 1000
@@ -296,7 +296,7 @@ _pr = get_pr_link(input_data.get('pr'))
 if _pr:
     parts.append(_pr)
 
-def first_prompt(transcript_path, max_lines=200, max_chars=140):
+def first_prompt(transcript_path, max_lines=200):
     """The session's first user message, collapsed to one line. '' before it exists."""
     if not transcript_path or not os.path.exists(transcript_path):
         return ''
@@ -321,8 +321,50 @@ def first_prompt(transcript_path, max_lines=200, max_chars=140):
                              ' ', content, flags=re.S)
             content = ' '.join(content.split())
             if content:
-                return content[:max_chars - 1] + '…' if len(content) > max_chars else content
+                return content
     return ''
+
+
+URL_RE = re.compile(r'https?://[^\s<>]+')
+NOTION_PAGE_ID_RE = re.compile(r'-?[0-9a-f]{32}$')
+
+
+def link_label(url):
+    """Short label for URLs whose text is mostly noise; None = show the URL as-is."""
+    parts = urlsplit(url)
+    host = parts.hostname or ''
+    if host == 'app.notion.com' or host == 'notion.so' or host.endswith('.notion.so'):
+        slug = parts.path.rstrip('/').rsplit('/', 1)[-1]
+        return NOTION_PAGE_ID_RE.sub('', slug).replace('-', ' ') or 'notion'
+    if host == 'claude.ai' and '/artifact/' in parts.path:
+        return 'artifact'
+    return None
+
+
+def shorten_links(text, max_chars):
+    """text with noisy URLs replaced by OSC 8 links, truncated to max_chars visible chars."""
+    segments = []  # (visible_text, url or None)
+    pos = 0
+    for m in URL_RE.finditer(text):
+        url = m.group().rstrip('.,;:!?)')
+        label = link_label(url)
+        if label is None:
+            continue
+        segments.append((text[pos:m.start()], None))
+        segments.append((label, url))
+        pos = m.start() + len(url)
+    segments.append((text[pos:], None))
+
+    out = ''
+    remaining = max_chars
+    for visible, url in segments:
+        if len(visible) > remaining:
+            visible = visible[:max(remaining - 1, 0)] + '…'
+        remaining -= len(visible)
+        out += f"\x1b]8;;{url}\x1b\\\033[4m{visible}\033[24m\x1b]8;;\x1b\\" if url else visible
+        if remaining <= 0:
+            break
+    return out
 
 
 def format_reset_time(epoch, short=False):
@@ -388,4 +430,4 @@ print(_render)
 
 _first = first_prompt(input_data.get('transcript_path'))
 if _first:
-    print(f"\033[90m» {_first}\033[0m")
+    print(f"\033[90m» {shorten_links(_first, max_chars=140)}\033[0m")
