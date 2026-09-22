@@ -326,18 +326,22 @@ def first_prompt(transcript_path, max_lines=200):
 
 
 URL_RE = re.compile(r'https?://[^\s<>]+')
-NOTION_PAGE_ID_RE = re.compile(r'-?[0-9a-f]{32}$')
+NOTION_PAGE_ID_RE = re.compile(r'-?([0-9a-f]{32})$')
 
 
-def link_label(url):
-    """Short label for URLs whose text is mostly noise; None = show the URL as-is."""
+def short_link(url):
+    """(label, href) for URLs whose text is mostly noise; None = show the URL as-is."""
     parts = urlsplit(url)
     host = parts.hostname or ''
     if host == 'app.notion.com' or host == 'notion.so' or host.endswith('.notion.so'):
-        slug = parts.path.rstrip('/').rsplit('/', 1)[-1]
-        return NOTION_PAGE_ID_RE.sub('', slug).replace('-', ' ') or 'notion'
+        dir_path, _, slug = parts.path.rstrip('/').rpartition('/')
+        page_id = NOTION_PAGE_ID_RE.search(slug)
+        if not page_id:
+            return 'notion', url
+        label = slug[:page_id.start()].replace('-', ' ') or 'notion'
+        return label, f"{parts.scheme}://{parts.netloc}{dir_path}/{page_id.group(1)}"
     if host == 'claude.ai' and '/artifact/' in parts.path:
-        return 'artifact'
+        return 'artifact', url
     return None
 
 
@@ -347,11 +351,11 @@ def shorten_links(text, max_chars):
     pos = 0
     for m in URL_RE.finditer(text):
         url = m.group().rstrip('.,;:!?)')
-        label = link_label(url)
-        if label is None:
+        link = short_link(url)
+        if link is None:
             continue
         segments.append((text[pos:m.start()], None))
-        segments.append((label, url))
+        segments.append(link)
         pos = m.start() + len(url)
     segments.append((text[pos:], None))
 
