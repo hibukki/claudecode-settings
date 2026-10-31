@@ -134,5 +134,18 @@
       "Source control: github.com/hibukki"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/yonatancale/.claude/hooks/after-compact-reorient.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
