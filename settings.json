@@ -7,9 +7,10 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "EDITOR": "code -w",
     "CLAUDE_CODE_PLAN_V2_EXPLORE_AGENT_COUNT": "3",
-    "ANTHROPIC_BASE_URL": "http://127.0.0.1:8787/t/5d70a79b253de91824aedc97bbdfc73c",
     "_CLAUDE_CODE_ASSUME_FIRST_PARTY_BASE_URL": "1",
-    "ENABLE_TOOL_SEARCH": "true"
+    "ENABLE_TOOL_SEARCH": "true",
+    "CLAUDE_CODE_GATEWAY_HINT_HEADERS": "1",
+    "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "1000000"
   },
   "permissions": {
     "allow": [
@@ -34,7 +35,7 @@
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "fable",
+  "model": "opus",
   "modelPicker": {
     "options": [
       {
@@ -42,16 +43,12 @@
         "label": "GPT-6 Astra"
       },
       {
-        "model": "gpt-5.6-sol",
-        "label": "GPT-5.6 Sol"
+        "model": "gpt-6.1-sol",
+        "label": "GPT-6.1 Sol"
       },
       {
-        "model": "gpt-5.6-terra",
-        "label": "GPT-5.6 Terra"
-      },
-      {
-        "model": "gpt-5.6-luna",
-        "label": "GPT-5.6 Luna"
+        "model": "gpt-6-luna",
+        "label": "GPT-6 Luna"
       }
     ]
   },
@@ -89,7 +86,8 @@
     "google-docs@hibukki-mcp": true,
     "notion@claude-plugins-official": true,
     "model-router@alignment-hive": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "cc-plugin-you-should-know@builtin": true
   },
   "extraKnownMarketplaces": {
     "anthropic-agent-skills": {
@@ -110,6 +108,27 @@
   "modelSettings": {
     "claude-fable-5-1": {
       "effortLevel": "high"
+    },
+    "gpt-5.6-luna": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-5.6-sol": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-5.6-terra": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-6-astra": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-6-luna": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-6-sol": {
+      "autoCompactWindow": 258400
+    },
+    "gpt-6.1-sol": {
+      "autoCompactWindow": 258400
     }
   },
   "awaySummaryEnabled": false,
@@ -121,7 +140,7 @@
   "showThinkingSummaries": true,
   "skipDangerousModePermissionPrompt": true,
   "verbose": true,
-  "autoCompactEnabled": false,
+  "autoCompactEnabled": true,
   "remoteControlAtStartup": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
@@ -138,14 +157,113 @@
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "compact",
         "hooks": [
           {
             "type": "command",
-            "command": "/Users/yonatancale/.claude/hooks/after-compact-reorient.sh"
+            "command": "/Users/yonatancale/.config/iterm2/cc-status"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.claude/hooks/after-compact-reorient.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "compact"
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "/Users/yonatancale/.config/iterm2/cc-status",
+            "type": "command"
           }
         ]
       }
     ]
-  }
+  },
+  "skipWorkflowUsageWarning": true
 }
