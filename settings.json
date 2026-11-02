@@ -7,7 +7,8 @@
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "EDITOR": "code -w",
     "CLAUDE_CODE_PLAN_V2_EXPLORE_AGENT_COUNT": "3",
-    "ENABLE_TOOL_SEARCH": "true"
+    "ENABLE_TOOL_SEARCH": "true",
+    "BASH_MAX_TIMEOUT_MS": "172800000"
   },
   "permissions": {
     "allow": [
